@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF62B79D66000E8512A /* ChartVC.swift */; };
+		744FFEF92B79D69F00E8512A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF82B79D69F00E8512A /* ProfileViewController.swift */; };
+		744FFEFD2B79D98400E8512A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFC2B79D98400E8512A /* Model.swift */; };
+		744FFEFF2B79FC5C00E8512A /* Layout Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFE2B79FC5C00E8512A /* Layout Factory.swift */; };
+		744FFF032B7A095000E8512A /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFF022B7A095000E8512A /* TaskCell.swift */; };
 		74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995BFD2B71198B00F16855 /* AppDelegate.swift */; };
 		74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995BFF2B71198B00F16855 /* SceneDelegate.swift */; };
-		74995C022B71198B00F16855 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995C012B71198B00F16855 /* ViewController.swift */; };
+		74995C022B71198B00F16855 /* KanbanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995C012B71198B00F16855 /* KanbanVC.swift */; };
 		74995C052B71198B00F16855 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74995C032B71198B00F16855 /* Main.storyboard */; };
 		74995C072B71198C00F16855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74995C062B71198C00F16855 /* Assets.xcassets */; };
 		74995C0A2B71198C00F16855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74995C082B71198C00F16855 /* LaunchScreen.storyboard */; };
@@ -17,10 +22,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		744FFEF62B79D66000E8512A /* ChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVC.swift; sourceTree = "<group>"; };
+		744FFEF82B79D69F00E8512A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		744FFEFC2B79D98400E8512A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		744FFEFE2B79FC5C00E8512A /* Layout Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Layout Factory.swift"; sourceTree = "<group>"; };
+		744FFF022B7A095000E8512A /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		74995BFA2B71198B00F16855 /* TimeCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74995BFD2B71198B00F16855 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74995BFF2B71198B00F16855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		74995C012B71198B00F16855 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		74995C012B71198B00F16855 /* KanbanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KanbanVC.swift; sourceTree = "<group>"; };
 		74995C042B71198B00F16855 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		74995C062B71198C00F16855 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		74995C092B71198C00F16855 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -39,6 +49,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		744FFEF52B79D41A00E8512A /* Kanban */ = {
+			isa = PBXGroup;
+			children = (
+				74995C012B71198B00F16855 /* KanbanVC.swift */,
+				744FFEFE2B79FC5C00E8512A /* Layout Factory.swift */,
+				744FFF022B7A095000E8512A /* TaskCell.swift */,
+			);
+			path = Kanban;
+			sourceTree = "<group>";
+		};
+		744FFEFB2B79D96F00E8512A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				744FFEFC2B79D98400E8512A /* Model.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		74995BF12B71198B00F16855 = {
 			isa = PBXGroup;
 			children = (
@@ -59,9 +87,12 @@
 		74995BFC2B71198B00F16855 /* TimeCanvas */ = {
 			isa = PBXGroup;
 			children = (
+				744FFEF62B79D66000E8512A /* ChartVC.swift */,
+				744FFEF82B79D69F00E8512A /* ProfileViewController.swift */,
+				744FFEFB2B79D96F00E8512A /* Model */,
+				744FFEF52B79D41A00E8512A /* Kanban */,
 				74995BFD2B71198B00F16855 /* AppDelegate.swift */,
 				74995BFF2B71198B00F16855 /* SceneDelegate.swift */,
-				74995C012B71198B00F16855 /* ViewController.swift */,
 				74995C032B71198B00F16855 /* Main.storyboard */,
 				74995C062B71198C00F16855 /* Assets.xcassets */,
 				74995C082B71198C00F16855 /* LaunchScreen.storyboard */,
@@ -141,10 +172,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				74995C022B71198B00F16855 /* ViewController.swift in Sources */,
+				744FFEFD2B79D98400E8512A /* Model.swift in Sources */,
+				744FFEF92B79D69F00E8512A /* ProfileViewController.swift in Sources */,
+				74995C022B71198B00F16855 /* KanbanVC.swift in Sources */,
 				74995C122B711BF900F16855 /* TabbarController.swift in Sources */,
+				744FFEFF2B79FC5C00E8512A /* Layout Factory.swift in Sources */,
 				74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */,
 				74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */,
+				744FFF032B7A095000E8512A /* TaskCell.swift in Sources */,
+				744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

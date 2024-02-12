@@ -13,6 +13,7 @@ protocol TabProtocol {
     var selectedImage: UIImage { get }
     var bgColor: UIColor { get }
     var title: String { get }
+    var viewController: UIViewController { get }
 }
 
 class TabbarController: UITabBarController {
@@ -58,6 +59,17 @@ class TabbarController: UITabBarController {
                 UIColor.green
             }
         }
+        
+        var viewController: UIViewController {
+            switch self {
+            case .kanban:
+                return KanbanViewController()
+            case .chart:
+                return ChartViewController()
+            case .profile:
+                return ProfileViewController()
+            }
+        }
     }
     
     let tabConfigs: [TabConfig] = [.kanban, .chart, .profile]
@@ -73,7 +85,6 @@ class TabbarController: UITabBarController {
         tabBarApearance.backgroundColor = .white
         tabBar.scrollEdgeAppearance = tabBarApearance
         tabBar.standardAppearance = tabBarApearance
-        
     }
 }
 
@@ -85,7 +96,9 @@ class NavControllerFactory {
                 color: tabConfig.bgColor,
                 tag: index,
                 defaultImage: tabConfig.defaultImage,
-                selectedImage: tabConfig.selectedImage)
+                selectedImage: tabConfig.selectedImage,
+                viewController: tabConfig.viewController
+            )
             
             navigationController.viewControllers.first?.title = tabConfig.title
             return navigationController
@@ -97,20 +110,15 @@ class NavControllerFactory {
         color: UIColor,
         tag: Int,
         defaultImage: UIImage,
-        selectedImage: UIImage) -> UINavigationController{
+        selectedImage: UIImage,
+        viewController: UIViewController) -> UINavigationController{
             
-            let newViewController = createViewController(with: color)
+            viewController.view.backgroundColor = color
             
-            let newNavController = UINavigationController(rootViewController: newViewController)
+            let newNavController = UINavigationController(rootViewController: viewController)
             newNavController.tabBarItem.tag = tag
             newNavController.tabBarItem.image = defaultImage
             newNavController.tabBarItem.selectedImage = selectedImage
             return newNavController
         }
-    
-    private func createViewController(with color: UIColor) -> UIViewController {
-        let newViewController = UIViewController()
-        newViewController.view.backgroundColor = color
-        return newViewController
-    }
 }
