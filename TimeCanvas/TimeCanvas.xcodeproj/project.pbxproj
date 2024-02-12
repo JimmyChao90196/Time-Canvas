@@ -19,6 +19,7 @@
 		74995C072B71198C00F16855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74995C062B71198C00F16855 /* Assets.xcassets */; };
 		74995C0A2B71198C00F16855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74995C082B71198C00F16855 /* LaunchScreen.storyboard */; };
 		74995C122B711BF900F16855 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995C112B711BF900F16855 /* TabbarController.swift */; };
+		C4808D23D2CD2560BDD647B3 /* Pods_TimeCanvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA58AD5755F7A1789DAA00C0 /* Pods_TimeCanvas.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,9 @@
 		74995C092B71198C00F16855 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74995C0B2B71198C00F16855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74995C112B711BF900F16855 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		8B86500E25CC323173EF07DF /* Pods-TimeCanvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeCanvas.debug.xcconfig"; path = "Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas.debug.xcconfig"; sourceTree = "<group>"; };
+		BA58AD5755F7A1789DAA00C0 /* Pods_TimeCanvas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeCanvas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5C4D301BD0F30DBB79E8F2E /* Pods-TimeCanvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeCanvas.release.xcconfig"; path = "Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,12 +47,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4808D23D2CD2560BDD647B3 /* Pods_TimeCanvas.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		534180E549A5E0C904B43FAE /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8B86500E25CC323173EF07DF /* Pods-TimeCanvas.debug.xcconfig */,
+				C5C4D301BD0F30DBB79E8F2E /* Pods-TimeCanvas.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		744FFEF52B79D41A00E8512A /* Kanban */ = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +88,8 @@
 				74995C112B711BF900F16855 /* TabbarController.swift */,
 				74995BFC2B71198B00F16855 /* TimeCanvas */,
 				74995BFB2B71198B00F16855 /* Products */,
+				534180E549A5E0C904B43FAE /* Pods */,
+				ACEA3BD66CD90FF3AD84F4FD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,6 +118,14 @@
 			path = TimeCanvas;
 			sourceTree = "<group>";
 		};
+		ACEA3BD66CD90FF3AD84F4FD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				BA58AD5755F7A1789DAA00C0 /* Pods_TimeCanvas.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -108,9 +133,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 74995C0E2B71198C00F16855 /* Build configuration list for PBXNativeTarget "TimeCanvas" */;
 			buildPhases = (
+				D08602944F91C74E742D81A7 /* [CP] Check Pods Manifest.lock */,
 				74995BF62B71198B00F16855 /* Sources */,
 				74995BF72B71198B00F16855 /* Frameworks */,
 				74995BF82B71198B00F16855 /* Resources */,
+				8C3CC17CDC15C06B34CE4EF9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -166,6 +193,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8C3CC17CDC15C06B34CE4EF9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D08602944F91C74E742D81A7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TimeCanvas-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		74995BF62B71198B00F16855 /* Sources */ = {
@@ -327,6 +396,7 @@
 		};
 		74995C0F2B71198C00F16855 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B86500E25CC323173EF07DF /* Pods-TimeCanvas.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -357,6 +427,7 @@
 		};
 		74995C102B71198C00F16855 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5C4D301BD0F30DBB79E8F2E /* Pods-TimeCanvas.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
