@@ -33,14 +33,19 @@ class LayoutConfigBig: LayoutConfigProtocol {
     var groupSize: NSCollectionLayoutSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.25))
 }
 
-class LayoutFactory {
+class CollectionViewConfigFactory {
     
-    init(layoutConfig: LayoutConfigProtocol) {
+    init(layoutConfig: LayoutConfigProtocol, cellType: TaskCellProtocol.Type) {
         self.layoutConfig = layoutConfig
+        self.cellType = cellType
     }
 
     // Config Layout
     var layoutConfig: LayoutConfigProtocol
+    var cellType: TaskCellProtocol.Type
+    var cellId: String {
+        cellType.identifier
+    }
     
     private func createItem() -> NSCollectionLayoutItem {
         let item = NSCollectionLayoutItem(layoutSize: layoutConfig.itemSize)
@@ -57,5 +62,11 @@ class LayoutFactory {
     public func createLayoutGuide() -> UICollectionViewCompositionalLayout {
         let section = NSCollectionLayoutSection(group: createGroup())
         return UICollectionViewCompositionalLayout(section: section)
+    }
+    
+    public func createCollectionView(bounds: CGRect) -> UICollectionView {
+        let collectionView = UICollectionView(frame: bounds, collectionViewLayout: createLayoutGuide())
+        collectionView.register(cellType.cellClass, forCellWithReuseIdentifier: cellType.identifier)
+        return collectionView
     }
 }

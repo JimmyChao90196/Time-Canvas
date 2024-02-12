@@ -10,8 +10,9 @@
 		744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF62B79D66000E8512A /* ChartVC.swift */; };
 		744FFEF92B79D69F00E8512A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF82B79D69F00E8512A /* ProfileViewController.swift */; };
 		744FFEFD2B79D98400E8512A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFC2B79D98400E8512A /* Model.swift */; };
-		744FFEFF2B79FC5C00E8512A /* Layout Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFE2B79FC5C00E8512A /* Layout Factory.swift */; };
+		744FFEFF2B79FC5C00E8512A /* CollectionView Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFE2B79FC5C00E8512A /* CollectionView Factory.swift */; };
 		744FFF032B7A095000E8512A /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFF022B7A095000E8512A /* TaskCell.swift */; };
+		744FFF052B7A0B4100E8512A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFF042B7A0B4100E8512A /* Extensions.swift */; };
 		74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995BFD2B71198B00F16855 /* AppDelegate.swift */; };
 		74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995BFF2B71198B00F16855 /* SceneDelegate.swift */; };
 		74995C022B71198B00F16855 /* KanbanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995C012B71198B00F16855 /* KanbanVC.swift */; };
@@ -26,8 +27,9 @@
 		744FFEF62B79D66000E8512A /* ChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVC.swift; sourceTree = "<group>"; };
 		744FFEF82B79D69F00E8512A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		744FFEFC2B79D98400E8512A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
-		744FFEFE2B79FC5C00E8512A /* Layout Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Layout Factory.swift"; sourceTree = "<group>"; };
+		744FFEFE2B79FC5C00E8512A /* CollectionView Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView Factory.swift"; sourceTree = "<group>"; };
 		744FFF022B7A095000E8512A /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
+		744FFF042B7A0B4100E8512A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		74995BFA2B71198B00F16855 /* TimeCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74995BFD2B71198B00F16855 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74995BFF2B71198B00F16855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,7 +62,6 @@
 				8B86500E25CC323173EF07DF /* Pods-TimeCanvas.debug.xcconfig */,
 				C5C4D301BD0F30DBB79E8F2E /* Pods-TimeCanvas.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -68,7 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				74995C012B71198B00F16855 /* KanbanVC.swift */,
-				744FFEFE2B79FC5C00E8512A /* Layout Factory.swift */,
+				744FFEFE2B79FC5C00E8512A /* CollectionView Factory.swift */,
 				744FFF022B7A095000E8512A /* TaskCell.swift */,
 			);
 			path = Kanban;
@@ -104,6 +105,7 @@
 		74995BFC2B71198B00F16855 /* TimeCanvas */ = {
 			isa = PBXGroup;
 			children = (
+				744FFF042B7A0B4100E8512A /* Extensions.swift */,
 				744FFEF62B79D66000E8512A /* ChartVC.swift */,
 				744FFEF82B79D69F00E8512A /* ProfileViewController.swift */,
 				744FFEFB2B79D96F00E8512A /* Model */,
@@ -242,10 +244,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				744FFEFD2B79D98400E8512A /* Model.swift in Sources */,
+				744FFF052B7A0B4100E8512A /* Extensions.swift in Sources */,
 				744FFEF92B79D69F00E8512A /* ProfileViewController.swift in Sources */,
 				74995C022B71198B00F16855 /* KanbanVC.swift in Sources */,
 				74995C122B711BF900F16855 /* TabbarController.swift in Sources */,
-				744FFEFF2B79FC5C00E8512A /* Layout Factory.swift in Sources */,
+				744FFEFF2B79FC5C00E8512A /* CollectionView Factory.swift in Sources */,
 				74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */,
 				74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */,
 				744FFF032B7A095000E8512A /* TaskCell.swift in Sources */,
@@ -312,7 +315,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -375,7 +378,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
