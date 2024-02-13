@@ -12,18 +12,33 @@ import SnapKit
 protocol TaskCellProtocol {
     static var cellClass: AnyClass { get }
     static var identifier: String { get }
+    var viewModel: KanbanViewModelProtocol { get set }
+    func configure(with: Task)
 }
 
-class TaskCollectionViewCell: UICollectionViewCell, TaskCellProtocol {
+class TaskCollectionViewCell: 
+    UICollectionViewCell,
+        TaskCellProtocol{
     
+    // View model
+    var viewModel: KanbanViewModelProtocol = KanbanViewModel()
+    
+    // Static Property
     static var cellClass: AnyClass {
         return TaskCollectionViewCell.self
     }
     
     static var identifier = String(describing: TaskCollectionViewCell.self)
     
+    // UI Elements
     private let taskNameLabel = UILabel()
     private let taskDescriptionLabel = UILabel()
+    
+    var optionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "ellipsis"), for: .normal)
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -39,14 +54,22 @@ class TaskCollectionViewCell: UICollectionViewCell, TaskCellProtocol {
         
         // Setup appearance
         taskNameLabel.font = UIFont.boldSystemFont(ofSize: 16)
+        taskNameLabel.textColor = .white
         taskDescriptionLabel.font = UIFont.systemFont(ofSize: 14)
-        taskDescriptionLabel.textColor = .gray
+        taskDescriptionLabel.textColor = .white
+        contentView.backgroundColor = .customLightGray
         contentView.layer.cornerRadius = 10
         
         contentView.addSubviews([
             taskNameLabel,
-            taskDescriptionLabel
+            taskDescriptionLabel,
+            optionButton
         ])
+        
+        optionButton.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.trailing.equalToSuperview().offset(-10)
+        }
         
         taskNameLabel.snp.makeConstraints { make in
             make.top.leading.equalToSuperview().offset(10)
@@ -63,6 +86,5 @@ class TaskCollectionViewCell: UICollectionViewCell, TaskCellProtocol {
     func configure(with task: Task) {
         taskNameLabel.text = task.taskName
         taskDescriptionLabel.text = task.taskDescription
-        contentView.backgroundColor = .red
     }
 }

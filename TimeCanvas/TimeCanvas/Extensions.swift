@@ -17,7 +17,6 @@ extension UIView {
             $0.translatesAutoresizingMaskIntoConstraints = false
             self.addSubview($0)
         }
-        
         return self
     }
 }

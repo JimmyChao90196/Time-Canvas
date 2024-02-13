@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 protocol KanbanDataProtocol {
-    var workSpaceName: String { get }
-    var sections: [Section] { get }
+    var workSpaceName: String { get set }
+    var sections: [Section] { get set }
 }
 
 struct KanbanWorkSpaceModel: KanbanDataProtocol {
@@ -18,22 +18,22 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
     var workSpaceName: String = "Main Space"
     var sections: [Section] = [
         
-        Section(name: "To Do", taskNum: 1, tasks: [Task.init(
+        Section(name: "To Do", tasks: [Task.init(
             taskName: "What to do",
             taskColor: "blue",
             taskDescription: "Type Description here")]),
         
-        Section(name: "Today", taskNum: 1, tasks: [Task.init(
+        Section(name: "Today", tasks: [Task.init(
             taskName: "What to do today",
             taskColor: "blue",
             taskDescription: "Type Description here")]),
         
-        Section(name: "Doing", taskNum: 1, tasks: [Task.init(
+        Section(name: "Doing", tasks: [Task.init(
             taskName: "What are you currrently doing",
             taskColor: "blue",
             taskDescription: "Type Description here")]),
         
-        Section(name: "Done", taskNum: 1, tasks: [Task.init(
+        Section(name: "Done", tasks: [Task.init(
             taskName: "What to do",
             taskColor: "blue",
             taskDescription: "Type Description here")])
@@ -41,13 +41,26 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
 }
 
 struct Section {
-    var name: String
-    var taskNum: Int
-    var tasks: [Task]
+    var name: String = "New Section"
+    var tasks: [Task] = [
+        Task(taskName: "New Task",
+             taskColor: "Green",
+             taskDescription: "Type Description here")]
+    var id: String = UUID().uuidString
+    
+    init(
+        name: String = "New Section" ,
+        tasks: [Task] = [Task(taskName: "New Task",
+                 taskColor: "Green",
+                 taskDescription: "Type Description here")]) {
+        self.name = name
+        self.tasks = tasks
+    }
 }
 
 struct Task {
-    var taskName: String
-    var taskColor: String
-    var taskDescription: String
+    var taskName: String = "New Task"
+    var taskColor: String = "Green"
+    var taskDescription: String = "Description"
+    var id: String = UUID().uuidString
 }
