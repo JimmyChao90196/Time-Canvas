@@ -63,5 +63,6 @@ class TaskCollectionViewCell: UICollectionViewCell, TaskCellProtocol {
     func configure(with task: Task) {
         taskNameLabel.text = task.taskName
         taskDescriptionLabel.text = task.taskDescription
+        contentView.backgroundColor = .red
     }
 }

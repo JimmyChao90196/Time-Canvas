@@ -13,7 +13,9 @@ class KanbanViewController: UIViewController, UICollectionViewDataSource, UIColl
     
     let collectionViewConfigFactory = CollectionViewConfigFactory(
         layoutConfig: LayoutConfigStandard(),
-        cellType: TaskCollectionViewCell.self)
+        cellType: TaskCollectionViewCell.self,
+        headerType: SectionHeaderView.self
+    )
     
     var kanbanCollectionView: UICollectionView = UICollectionView(
         frame: CGRect(),
@@ -57,7 +59,7 @@ extension KanbanViewController {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: collectionViewConfigFactory.cellId,
+            withReuseIdentifier: TaskCollectionViewCell.identifier,
             for: indexPath) as? TaskCollectionViewCell else { return UICollectionViewCell() }
         
         let section = kanbanData.sections[indexPath.section]
@@ -66,6 +68,20 @@ extension KanbanViewController {
         cell.configure(with: task)
         return cell
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath) -> UICollectionReusableView {
+            
+            guard let header = collectionView.dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: SectionHeaderView.reuseIdentifier,
+                for: indexPath) as? SectionHeaderView else { return UICollectionReusableView() }
+            
+            let sectionTitle = kanbanData.sections[indexPath.section].name
+            header.configure(with: sectionTitle)
+            return header
+    }
 }
-
 

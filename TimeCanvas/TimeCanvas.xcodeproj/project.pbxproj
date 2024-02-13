@@ -13,6 +13,7 @@
 		744FFEFF2B79FC5C00E8512A /* CollectionView Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFE2B79FC5C00E8512A /* CollectionView Factory.swift */; };
 		744FFF032B7A095000E8512A /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFF022B7A095000E8512A /* TaskCell.swift */; };
 		744FFF052B7A0B4100E8512A /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFF042B7A0B4100E8512A /* Extensions.swift */; };
+		744FFF072B7A20C200E8512A /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFF062B7A20C200E8512A /* SectionHeader.swift */; };
 		74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995BFD2B71198B00F16855 /* AppDelegate.swift */; };
 		74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995BFF2B71198B00F16855 /* SceneDelegate.swift */; };
 		74995C022B71198B00F16855 /* KanbanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995C012B71198B00F16855 /* KanbanVC.swift */; };
@@ -30,6 +31,7 @@
 		744FFEFE2B79FC5C00E8512A /* CollectionView Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionView Factory.swift"; sourceTree = "<group>"; };
 		744FFF022B7A095000E8512A /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
 		744FFF042B7A0B4100E8512A /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		744FFF062B7A20C200E8512A /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		74995BFA2B71198B00F16855 /* TimeCanvas.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TimeCanvas.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		74995BFD2B71198B00F16855 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		74995BFF2B71198B00F16855 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				74995C012B71198B00F16855 /* KanbanVC.swift */,
 				744FFEFE2B79FC5C00E8512A /* CollectionView Factory.swift */,
 				744FFF022B7A095000E8512A /* TaskCell.swift */,
+				744FFF062B7A20C200E8512A /* SectionHeader.swift */,
 			);
 			path = Kanban;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				744FFEFF2B79FC5C00E8512A /* CollectionView Factory.swift in Sources */,
 				74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */,
 				74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */,
+				744FFF072B7A20C200E8512A /* SectionHeader.swift in Sources */,
 				744FFF032B7A095000E8512A /* TaskCell.swift in Sources */,
 				744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */,
 			);
