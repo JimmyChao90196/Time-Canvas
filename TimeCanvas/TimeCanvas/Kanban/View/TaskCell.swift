@@ -8,27 +8,35 @@
 import Foundation
 import UIKit
 import SnapKit
+import Combine
 
 protocol TaskCellProtocol {
     static var cellClass: AnyClass { get }
     static var identifier: String { get }
-    var viewModel: KanbanBasicProtocol { get set }
+    var viewModel: KanbanBasicVMProtocol { get set }
     func configure(with: Task)
 }
 
-class TaskCollectionViewCell: 
+enum CellState {
+    case normal
+    case unselected
+    case selected
+}
+
+class TaskCollectionViewCell:
     UICollectionViewCell,
         TaskCellProtocol{
     
     // View model
-    var viewModel: KanbanBasicProtocol = KanbanViewModel()
+    var viewModel: KanbanBasicVMProtocol = KanbanViewModel()
+    private var cancellables: Set<AnyCancellable> = []
     
     // Static Property
     static var cellClass: AnyClass {
         return TaskCollectionViewCell.self
     }
-    
     static var identifier = String(describing: TaskCollectionViewCell.self)
+
     
     // UI Elements
     private let taskNameLabel = UILabel()
@@ -43,15 +51,22 @@ class TaskCollectionViewCell:
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
+        dataBinding()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
+        dataBinding()
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        cancellables = []
     }
     
     private func setupViews() {
-        
+
         // Setup appearance
         taskNameLabel.font = UIFont.boldSystemFont(ofSize: 16)
         taskNameLabel.textColor = .white
@@ -86,5 +101,10 @@ class TaskCollectionViewCell:
     func configure(with task: Task) {
         taskNameLabel.text = task.taskName
         taskDescriptionLabel.text = task.taskDescription
+    }
+    
+    // Data Binding
+    private func dataBinding() {
+
     }
 }

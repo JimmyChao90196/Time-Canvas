@@ -9,26 +9,36 @@ import Foundation
 import Combine
 import UIKit
 
-protocol KanbanBasicProtocol {
+protocol KanbanBasicVMProtocol {
+    var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> { get }
+    var isEditMode: CurrentValueSubject<Bool, Never> { get }
+    
     func appendSection()
     func deleteSection()
     func appendTask(within: Section)
     func deleteTask(with: IndexPath)
+    
+    // Additional
+    func toggleEditMode()
 }
 
-protocol KanbanAdditionalOptionsProtocol {
+protocol KanbanAdditionalVMProtocol {
     func copyTask()
     func renameTask()
     func archiveTask()
 }
 
-class KanbanViewModel: KanbanBasicProtocol, KanbanAdditionalOptionsProtocol {
-
-    @Published var kanbanData: KanbanDataProtocol = KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace")
+class KanbanViewModel: KanbanBasicVMProtocol, KanbanAdditionalVMProtocol {
+    
+    var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> = .init(
+        KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace"))
+    
+    var isEditMode: CurrentValueSubject<Bool, Never> = .init(false)
+    
     
     func appendSection() {
         let newSection = Section()
-        kanbanData.sections.append(newSection)
+        kanbanData.value.sections.append(newSection)
     }
     
     func deleteSection() {
@@ -36,7 +46,7 @@ class KanbanViewModel: KanbanBasicProtocol, KanbanAdditionalOptionsProtocol {
     }
     
     func appendTask(within targetSection: Section) {
-        kanbanData.sections = kanbanData.sections.map { section in
+        kanbanData.value.sections = kanbanData.value.sections.map { section in
             if section.id == targetSection.id {
                 var newSection = section
                 newSection.tasks.append(Task())
@@ -48,8 +58,7 @@ class KanbanViewModel: KanbanBasicProtocol, KanbanAdditionalOptionsProtocol {
     }
     
     func deleteTask(with indexPath: IndexPath) {
-        print(indexPath)
-        kanbanData.sections[indexPath.section].tasks.remove(at: indexPath.row)
+        kanbanData.value.sections[indexPath.section].tasks.remove(at: indexPath.row)
     }
     
     func copyTask() {
@@ -62,5 +71,10 @@ class KanbanViewModel: KanbanBasicProtocol, KanbanAdditionalOptionsProtocol {
     
     func archiveTask() {
         
+    }
+    
+    // Additional
+    func toggleEditMode() {
+        isEditMode.value.toggle()
     }
 }

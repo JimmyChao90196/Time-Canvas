@@ -41,6 +41,16 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         return button
     }()
     
+    lazy var editButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(
+            title: "Select",
+            style: .plain,
+            target: self,
+            action: #selector(selectButtonPressed))
+        
+        return button
+    }()
+    
     // MARK: - View Did Load -
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +62,8 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         // Init collection view
         kanbanCollectionView = collectionViewFactory?.createCollectionView(bounds: view.bounds) ?? UICollectionView()
         kanbanCollectionView.delegate = self
+        kanbanCollectionView.allowsMultipleSelectionDuringEditing = true
+        kanbanCollectionView.allowsMultipleSelection = true
         
         // Init Kanban DataSource
         kanbanDataSource = KanbanDataSourceType(
@@ -74,6 +86,7 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     func setupNav() {
         self.navigationItem.rightBarButtonItem = addSectionButton
+        self.navigationItem.leftBarButtonItem = editButton
     }
     
     func setupSubviews() {
@@ -90,13 +103,27 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - Data Binding
     func dataBinding() {
-        viewModel.$kanbanData.sink { [weak self] updatedValue in
+        viewModel.kanbanData.sink { [weak self] updatedValue in
+            self?.kanbanCollectionView.reloadData()
+        }.store(in: &cancellables)
+        
+        viewModel.isEditMode.receive(on: RunLoop.main).sink { [weak self] updatedValue in
+            self?.isEditing = updatedValue
+            self?.kanbanCollectionView.allowsMultipleSelection = updatedValue
+            self?.kanbanCollectionView.visibleCells.forEach({ cell in
+                cell.contentView.backgroundColor = updatedValue ? .customUltraLightGray: .customLightGray
+            })
             self?.kanbanCollectionView.reloadData()
         }.store(in: &cancellables)
     }
     
+    // MARK: - Button Action -
     @objc func addSectionButtonPressed() {
         viewModel.appendSection()
+    }
+    
+    @objc func selectButtonPressed() {
+        viewModel.toggleEditMode()
     }
     
     // MARK: - Delegation -
@@ -109,5 +136,28 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
             return menuFactory?.createContexMenuConfig(
                 with: options,
                 and: indexPaths.first ?? IndexPath())
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard isEditing else {
+            collectionView.deselectItem(at: indexPath, animated: false)
+            return
+        }
+            
+        DispatchQueue.main.async {
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.contentView.backgroundColor = .blue
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        guard isEditing else { return }
+        
+        DispatchQueue.main.async {
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.contentView.backgroundColor = .customUltraLightGray
+        }
     }
 }

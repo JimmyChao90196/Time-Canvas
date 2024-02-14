@@ -11,16 +11,16 @@ import Combine
 
 class KanbanDataSource<
     CellType: TaskCellProtocol & UICollectionViewCell,
-    HeaderType: SectionHeaderProtocol & UICollectionReusableView>: 
+    HeaderType: SectionHeaderProtocol & UICollectionReusableView>:
         NSObject,
         UICollectionViewDataSource {
     
     // ViewModel
-    var viewModel = KanbanViewModel()
+    var viewModel: KanbanBasicVMProtocol = KanbanViewModel()
     private var cancellables: Set<AnyCancellable> = []
     
     init(kanbanData: KanbanDataProtocol,
-         viewModel: KanbanViewModel,
+         viewModel: KanbanBasicVMProtocol,
          collectionView: UICollectionView) {
         self.kanbanData = kanbanData
         self.viewModel = viewModel
@@ -32,7 +32,7 @@ class KanbanDataSource<
     var kanbanData: KanbanDataProtocol
     
     func dataBinding() {
-        viewModel.$kanbanData.sink { [weak self] updatedValue in
+        viewModel.kanbanData.sink { [weak self] updatedValue in
             self?.kanbanData = updatedValue
         }.store(in: &cancellables)
     }
