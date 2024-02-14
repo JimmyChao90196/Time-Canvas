@@ -123,7 +123,7 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     }
     
     @objc func selectButtonPressed() {
-        viewModel.toggleEditMode()
+        viewModel.toggleEditMode(with: isEditing)
     }
     
     // MARK: - Delegation -

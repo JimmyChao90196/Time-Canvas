@@ -13,7 +13,7 @@ import Combine
 protocol TaskCellProtocol {
     static var cellClass: AnyClass { get }
     static var identifier: String { get }
-    var viewModel: KanbanBasicVMProtocol { get set }
+    var viewModel: KanbanPropertyVMProtocol { get set }
     func configure(with: Task)
 }
 
@@ -28,15 +28,14 @@ class TaskCollectionViewCell:
         TaskCellProtocol{
     
     // View model
-    var viewModel: KanbanBasicVMProtocol = KanbanViewModel()
-    private var cancellables: Set<AnyCancellable> = []
+    var viewModel: KanbanPropertyVMProtocol = KanbanViewModel() 
+    var cancellables = Set<AnyCancellable>()
     
     // Static Property
     static var cellClass: AnyClass {
         return TaskCollectionViewCell.self
     }
     static var identifier = String(describing: TaskCollectionViewCell.self)
-
     
     // UI Elements
     private let taskNameLabel = UILabel()
@@ -51,13 +50,11 @@ class TaskCollectionViewCell:
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        dataBinding()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
-        dataBinding()
     }
     
     override func prepareForReuse() {
@@ -101,10 +98,5 @@ class TaskCollectionViewCell:
     func configure(with task: Task) {
         taskNameLabel.text = task.taskName
         taskDescriptionLabel.text = task.taskDescription
-    }
-    
-    // Data Binding
-    private func dataBinding() {
-
     }
 }

@@ -9,32 +9,38 @@ import Foundation
 import Combine
 import UIKit
 
-protocol KanbanBasicVMProtocol {
+
+protocol KanbanPropertyVMProtocol {
     var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> { get }
-    var isEditMode: CurrentValueSubject<Bool, Never> { get }
-    
-    func appendSection()
-    func deleteSection()
-    func appendTask(within: Section)
-    func deleteTask(with: IndexPath)
-    
-    // Additional
-    func toggleEditMode()
+    var isEditMode: PassthroughSubject<Bool, Never> { get }
 }
 
-protocol KanbanAdditionalVMProtocol {
+protocol KanbanAppendVMProtocol {    
+    func appendSection()
+    func appendTask(within: Section)
+}
+
+protocol KanbanDeleteVMProtocol {
+    func deleteSection()
+    func deleteTask(with: IndexPath)
+}
+
+protocol KanbanAdvanceVMProtocol {
     func copyTask()
     func renameTask()
     func archiveTask()
 }
 
-class KanbanViewModel: KanbanBasicVMProtocol, KanbanAdditionalVMProtocol {
+class KanbanViewModel:
+    KanbanPropertyVMProtocol,
+    KanbanAppendVMProtocol,
+    KanbanAdvanceVMProtocol,
+    KanbanDeleteVMProtocol {
     
     var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> = .init(
         KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace"))
     
-    var isEditMode: CurrentValueSubject<Bool, Never> = .init(false)
-    
+    var isEditMode: PassthroughSubject<Bool, Never> = .init()
     
     func appendSection() {
         let newSection = Section()
@@ -74,7 +80,7 @@ class KanbanViewModel: KanbanBasicVMProtocol, KanbanAdditionalVMProtocol {
     }
     
     // Additional
-    func toggleEditMode() {
-        isEditMode.value.toggle()
+    func toggleEditMode(with isEditing: Bool) {
+        isEditMode.send(!isEditing)
     }
 }

@@ -15,19 +15,6 @@ enum MenuOptions {
     case delete
     case archive
     
-    var option: Self {
-        switch self {
-        case .copy:
-            return .copy
-        case .rename:
-            return .rename
-        case .delete:
-            return .delete
-        case .archive:
-            return .archive
-        }
-    }
-    
     var name: String {
         switch self {
         case .copy:
@@ -70,14 +57,14 @@ enum MenuOptions {
 class MenuConfigFactory {
     
     // View Model
-    var viewModel = KanbanViewModel()
+    var viewModel: KanbanDeleteVMProtocol & KanbanAdvanceVMProtocol = KanbanViewModel()
     
     // Collection View
     var collectionView = UICollectionView(
         frame: CGRect(),
         collectionViewLayout: UICollectionViewLayout())
     
-    init(viewModel: KanbanViewModel = KanbanViewModel(),
+    init(viewModel: KanbanDeleteVMProtocol & KanbanAdvanceVMProtocol,
          collectionView: UICollectionView = UICollectionView(
             frame: CGRect(),
             collectionViewLayout: UICollectionViewLayout())) {
@@ -108,7 +95,7 @@ class MenuConfigFactory {
                         discoverabilityTitle: nil,
                         state: option.state) { action in
                             
-                            switch option.option {
+                            switch option {
                             case .copy:
                                 self.viewModel.copyTask()
                             case .rename:

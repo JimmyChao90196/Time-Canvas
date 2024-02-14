@@ -15,12 +15,15 @@ class KanbanDataSource<
         NSObject,
         UICollectionViewDataSource {
     
+    // Typealias
+    typealias VMTypes = KanbanPropertyVMProtocol & KanbanAppendVMProtocol
+    
     // ViewModel
-    var viewModel: KanbanBasicVMProtocol = KanbanViewModel()
+    var viewModel: VMTypes = KanbanViewModel()
     private var cancellables: Set<AnyCancellable> = []
     
     init(kanbanData: KanbanDataProtocol,
-         viewModel: KanbanBasicVMProtocol,
+         viewModel: VMTypes,
          collectionView: UICollectionView) {
         self.kanbanData = kanbanData
         self.viewModel = viewModel
@@ -55,7 +58,7 @@ class KanbanDataSource<
         let section = kanbanData.sections[indexPath.section]
         let task = section.tasks[indexPath.row]
         
-        // Assign view model
+        // Assign view model & cancellable
         cell.viewModel = viewModel
         
         // Config Cell Content

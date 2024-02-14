@@ -13,7 +13,7 @@ protocol SectionHeaderProtocol {
     static var reuseIdentifier: String { get }
     static var headerClass: AnyClass { get }
     
-    var viewModel: KanbanBasicVMProtocol { get set }
+    var viewModel: KanbanAppendVMProtocol { get set }
     var section: Section { get set }
     
     func configure(with section: Section)
@@ -31,7 +31,7 @@ class SectionHeaderView: UICollectionReusableView, SectionHeaderProtocol {
     var section: Section = Section()
     
     // View Model
-    var viewModel: KanbanBasicVMProtocol = KanbanViewModel()
+    var viewModel: KanbanAppendVMProtocol = KanbanViewModel()
     
     // UI Component
     let titleLabel = UILabel()
