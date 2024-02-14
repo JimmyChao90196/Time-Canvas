@@ -12,7 +12,7 @@ import SnapKit
 protocol TaskCellProtocol {
     static var cellClass: AnyClass { get }
     static var identifier: String { get }
-    var viewModel: KanbanViewModelProtocol { get set }
+    var viewModel: KanbanBasicProtocol { get set }
     func configure(with: Task)
 }
 
@@ -21,7 +21,7 @@ class TaskCollectionViewCell:
         TaskCellProtocol{
     
     // View model
-    var viewModel: KanbanViewModelProtocol = KanbanViewModel()
+    var viewModel: KanbanBasicProtocol = KanbanViewModel()
     
     // Static Property
     static var cellClass: AnyClass {

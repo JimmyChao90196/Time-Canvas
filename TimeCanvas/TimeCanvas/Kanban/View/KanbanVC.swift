@@ -12,7 +12,7 @@ import Combine
 typealias KanbanDataSourceType = KanbanDataSource<TaskCollectionViewCell, SectionHeaderView>
 typealias CollectionViewFactoryType = CollectionViewFactory <TaskCollectionViewCell, SectionHeaderView>
 
-class KanbanViewController: UIViewController {
+class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     // View model
     var viewModel = KanbanViewModel()
@@ -24,6 +24,7 @@ class KanbanViewController: UIViewController {
     // Factory and DataSource
     var collectionViewFactory: CollectionViewFactoryType?
     var kanbanDataSource: KanbanDataSourceType?
+    var menuFactory: MenuConfigFactory?
     
     // UI Component
     var kanbanCollectionView: UICollectionView = UICollectionView(
@@ -44,17 +45,26 @@ class KanbanViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Init kanban DataSource
-        kanbanDataSource = KanbanDataSourceType(
-            kanbanData: kanbanData,
-            viewModel: viewModel)
-        
         // Init collection factory
         collectionViewFactory = CollectionViewFactoryType(
             layoutConfig: LayoutConfigStandard())
         
+        // Init collection view
         kanbanCollectionView = collectionViewFactory?.createCollectionView(bounds: view.bounds) ?? UICollectionView()
+        kanbanCollectionView.delegate = self
+        
+        // Init Kanban DataSource
+        kanbanDataSource = KanbanDataSourceType(
+            kanbanData: kanbanData,
+            viewModel: viewModel,
+            collectionView: kanbanCollectionView)
+        
         kanbanCollectionView.dataSource = kanbanDataSource
+        
+        // Init Factory
+        self.menuFactory = MenuConfigFactory(
+            viewModel: viewModel,
+            collectionView: kanbanCollectionView)
         
         setupNav()
         setupSubviews()
@@ -81,12 +91,23 @@ class KanbanViewController: UIViewController {
     // MARK: - Data Binding
     func dataBinding() {
         viewModel.$kanbanData.sink { [weak self] updatedValue in
-            print(updatedValue)
             self?.kanbanCollectionView.reloadData()
         }.store(in: &cancellables)
     }
     
     @objc func addSectionButtonPressed() {
         viewModel.appendSection()
+    }
+    
+    // MARK: - Delegation -
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
+        point: CGPoint) -> UIContextMenuConfiguration? {
+        
+            let options: [MenuOptions] = [.copy, .rename, .delete]
+            return menuFactory?.createContexMenuConfig(
+                with: options,
+                and: indexPaths.first ?? IndexPath())
     }
 }

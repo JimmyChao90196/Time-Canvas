@@ -9,14 +9,20 @@ import Foundation
 import Combine
 import UIKit
 
-protocol KanbanViewModelProtocol {
+protocol KanbanBasicProtocol {
     func appendSection()
     func deleteSection()
     func appendTask(within: Section)
-    func deleteTask()
+    func deleteTask(with: IndexPath)
 }
 
-class KanbanViewModel: KanbanViewModelProtocol {
+protocol KanbanAdditionalOptionsProtocol {
+    func copyTask()
+    func renameTask()
+    func archiveTask()
+}
+
+class KanbanViewModel: KanbanBasicProtocol, KanbanAdditionalOptionsProtocol {
 
     @Published var kanbanData: KanbanDataProtocol = KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace")
     
@@ -41,8 +47,20 @@ class KanbanViewModel: KanbanViewModelProtocol {
         }
     }
     
-    func deleteTask() {
+    func deleteTask(with indexPath: IndexPath) {
+        print(indexPath)
+        kanbanData.sections[indexPath.section].tasks.remove(at: indexPath.row)
+    }
+    
+    func copyTask() {
         
     }
     
+    func renameTask() {
+        
+    }
+    
+    func archiveTask() {
+        
+    }
 }

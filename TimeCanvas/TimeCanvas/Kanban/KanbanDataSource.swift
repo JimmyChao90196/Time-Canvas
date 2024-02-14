@@ -13,16 +13,18 @@ class KanbanDataSource<
     CellType: TaskCellProtocol & UICollectionViewCell,
     HeaderType: SectionHeaderProtocol & UICollectionReusableView>: 
         NSObject,
-        UICollectionViewDataSource,
-        UIContextMenuInteractionDelegate {
+        UICollectionViewDataSource {
     
     // ViewModel
     var viewModel = KanbanViewModel()
     private var cancellables: Set<AnyCancellable> = []
     
-    init(kanbanData: KanbanDataProtocol, viewModel: KanbanViewModel) {
+    init(kanbanData: KanbanDataProtocol,
+         viewModel: KanbanViewModel,
+         collectionView: UICollectionView) {
         self.kanbanData = kanbanData
         self.viewModel = viewModel
+        
         super.init()
         dataBinding()
     }
@@ -36,6 +38,7 @@ class KanbanDataSource<
     }
     
     // MARK: - Data Source -
+    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         kanbanData.sections.count
     }
@@ -54,9 +57,6 @@ class KanbanDataSource<
         
         // Assign view model
         cell.viewModel = viewModel
-        
-        // Assign Interaction
-        cell.addInteraction(UIContextMenuInteraction(delegate: self))
         
         // Config Cell Content
         cell.configure(with: task)
@@ -80,26 +80,4 @@ class KanbanDataSource<
             header.configure(with: section)
             return header
         }
-    
-    // MARK: - Contex Menu Delegation -
-    func contextMenuInteraction(
-        _ interaction: UIContextMenuInteraction,
-        configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-            
-            return UIContextMenuConfiguration(
-                identifier: nil,
-                previewProvider: nil) { suggestedActions -> UIMenu? in
-                    
-                    let actionRename = UIAction(title: "rename", image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { action in
-                        print("Action One Tapped")
-                    }
-                    
-                    let actionDelete = UIAction(title: "Delete", image: nil, identifier: nil, discoverabilityTitle: nil, state: .off) { action in
-                        print("Action Two Tapped")
-                    }
-                    
-                    return UIMenu(title: "More Options", children: [actionRename, actionDelete])
-                }
-        }
 }
-

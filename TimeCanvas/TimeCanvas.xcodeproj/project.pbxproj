@@ -23,6 +23,7 @@
 		74995C072B71198C00F16855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74995C062B71198C00F16855 /* Assets.xcassets */; };
 		74995C0A2B71198C00F16855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74995C082B71198C00F16855 /* LaunchScreen.storyboard */; };
 		74995C122B711BF900F16855 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995C112B711BF900F16855 /* TabbarController.swift */; };
+		74EE7E012B7C437C00B1FDE7 /* MenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE7E002B7C437C00B1FDE7 /* MenuFactory.swift */; };
 		C4808D23D2CD2560BDD647B3 /* Pods_TimeCanvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA58AD5755F7A1789DAA00C0 /* Pods_TimeCanvas.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		74995C092B71198C00F16855 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74995C0B2B71198C00F16855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74995C112B711BF900F16855 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		74EE7E002B7C437C00B1FDE7 /* MenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFactory.swift; sourceTree = "<group>"; };
 		8B86500E25CC323173EF07DF /* Pods-TimeCanvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeCanvas.debug.xcconfig"; path = "Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas.debug.xcconfig"; sourceTree = "<group>"; };
 		BA58AD5755F7A1789DAA00C0 /* Pods_TimeCanvas.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TimeCanvas.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5C4D301BD0F30DBB79E8F2E /* Pods-TimeCanvas.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeCanvas.release.xcconfig"; path = "Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas.release.xcconfig"; sourceTree = "<group>"; };
@@ -76,6 +78,7 @@
 			children = (
 				744FFF0A2B7B04B200E8512A /* View */,
 				744FFEFE2B79FC5C00E8512A /* CollectionViewFactory.swift */,
+				74EE7E002B7C437C00B1FDE7 /* MenuFactory.swift */,
 				744FFF082B7B027300E8512A /* KanbanDataSource.swift */,
 				744FFF0B2B7B04C700E8512A /* KanbanViewModel.swift */,
 			);
@@ -269,6 +272,7 @@
 				744FFEFF2B79FC5C00E8512A /* CollectionViewFactory.swift in Sources */,
 				74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */,
 				74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */,
+				74EE7E012B7C437C00B1FDE7 /* MenuFactory.swift in Sources */,
 				744FFF072B7A20C200E8512A /* SectionHeader.swift in Sources */,
 				744FFF032B7A095000E8512A /* TaskCell.swift in Sources */,
 				744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */,
