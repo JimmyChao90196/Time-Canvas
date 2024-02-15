@@ -28,7 +28,11 @@ class TaskCollectionViewCell:
         TaskCellProtocol{
     
     // View model
-    var viewModel: KanbanPropertyVMProtocol = KanbanViewModel() 
+    var viewModel: KanbanPropertyVMProtocol = KanbanViewModel() {
+        didSet {
+            dataBinding()
+        }
+    }
     var cancellables = Set<AnyCancellable>()
     
     // Static Property
@@ -100,5 +104,17 @@ class TaskCollectionViewCell:
     func configure(with task: Task) {
         taskNameLabel.text = task.taskName
         taskDescriptionLabel.text = task.taskDescription
+    }
+    
+    func dataBinding() {
+        cancellables = []
+        viewModel.isEditMode
+            .receive(on: RunLoop.main)
+            .sink { updatedData in
+                print(updatedData)
+                self.contentView.backgroundColor = updatedData ?
+                    .customUltraLightGray: .customLightGray
+            }
+            .store(in: &cancellables)
     }
 }

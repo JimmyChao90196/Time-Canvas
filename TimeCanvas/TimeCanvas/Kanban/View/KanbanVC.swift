@@ -112,15 +112,7 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         }.store(in: &cancellables)
         
         viewModel.isEditMode.sink { [weak self] updatedValue in
-            
             self?.isEditing = updatedValue
-            self?.kanbanCollectionView.allowsMultipleSelection = updatedValue
-            
-            DispatchQueue.main.async {
-                self?.kanbanCollectionView.visibleCells.forEach({ cell in
-                    cell.contentView.backgroundColor = updatedValue ? .customUltraLightGray: .customLightGray
-                })
-            }
             
         }.store(in: &cancellables)
     }
