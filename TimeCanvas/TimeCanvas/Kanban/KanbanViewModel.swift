@@ -66,7 +66,7 @@ class KanbanViewModel:
     
     func deleteTask(with indexPaths: [IndexPath]) {
         
-        var ids = indexPaths.compactMap { indexPath in
+        let ids = indexPaths.compactMap { indexPath in
             return kanbanData.value.sections[indexPath.section].tasks[indexPath.item].id
         }
         
@@ -81,6 +81,7 @@ class KanbanViewModel:
         }
         
         kanbanData.value.sections = updatedSections
+        
     }
     
     func copyTask() {

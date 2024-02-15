@@ -103,6 +103,13 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - Data Binding
     func dataBinding() {
+        viewModel.kanbanData.sink { [weak self] updatedValue in
+            self?.kanbanDataSource?.kanbanData = updatedValue
+            DispatchQueue.main.async {
+                self?.kanbanCollectionView.reloadData()
+                self?.viewModel.isEditMode.send(false)
+            }
+        }.store(in: &cancellables)
         
         viewModel.isEditMode.sink { [weak self] updatedValue in
             
@@ -142,13 +149,12 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     }
     
     // MARK: - Collection view delegation -
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        isEditing ? true: false
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard isEditing else {
-            collectionView.deselectItem(at: indexPath, animated: false)
-            return
-        }
-            
         DispatchQueue.main.async {
             let cell = collectionView.cellForItem(at: indexPath)
             cell?.contentView.backgroundColor = .blue
@@ -156,9 +162,6 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        
-        guard isEditing else { return }
-        
         DispatchQueue.main.async {
             let cell = collectionView.cellForItem(at: indexPath)
             cell?.contentView.backgroundColor = .customUltraLightGray

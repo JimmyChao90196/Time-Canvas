@@ -41,12 +41,12 @@ class KanbanDataSource<
     var kanbanData: KanbanDataProtocol
     
     func dataBinding() {
-        viewModel.kanbanData.sink { [weak self] updatedValue in
-            self?.kanbanData = updatedValue
-            DispatchQueue.main.async {
-                self?.kanbanCollectionView.reloadData()
-            }
-        }.store(in: &cancellables)
+//        viewModel.kanbanData.sink { [weak self] updatedValue in
+//            self?.kanbanData = updatedValue
+//            DispatchQueue.main.async {
+//                self?.kanbanCollectionView.reloadData()
+//            }
+//        }.store(in: &cancellables)
     }
     
     // MARK: - Data Source -
