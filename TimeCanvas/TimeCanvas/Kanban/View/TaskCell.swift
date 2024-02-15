@@ -13,6 +13,7 @@ import Combine
 protocol TaskCellProtocol {
     static var cellClass: AnyClass { get }
     static var identifier: String { get }
+    var isSelected: Bool { get }
     var viewModel: KanbanPropertyVMProtocol { get set }
     func configure(with: Task)
 }
@@ -39,7 +40,6 @@ class TaskCollectionViewCell:
     static var cellClass: AnyClass {
         return TaskCollectionViewCell.self
     }
-    
     static var identifier = String(describing: TaskCollectionViewCell.self)
     
     // UI Elements
@@ -110,9 +110,8 @@ class TaskCollectionViewCell:
         cancellables = []
         viewModel.isEditMode
             .receive(on: RunLoop.main)
-            .sink { updatedData in
-                print(updatedData)
-                self.contentView.backgroundColor = updatedData ?
+            .sink { [weak self] updatedData in
+                self?.contentView.backgroundColor = updatedData ?
                     .customUltraLightGray: .customLightGray
             }
             .store(in: &cancellables)

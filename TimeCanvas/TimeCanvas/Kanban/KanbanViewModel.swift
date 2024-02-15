@@ -12,7 +12,8 @@ import UIKit
 protocol KanbanPropertyVMProtocol {
     var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> { get }
     var isEditMode: PassthroughSubject<Bool, Never> { get }
-    var cellState: PassthroughSubject<CellState, Never> { get }
+    var isSelected: PassthroughSubject<Bool, Never> { get }
+    var cellColor: PassthroughSubject<UIColor, Never> { get }
 }
 
 protocol KanbanAppendVMProtocol {    
@@ -37,11 +38,18 @@ class KanbanViewModel:
     KanbanAdvanceVMProtocol,
     KanbanDeleteVMProtocol{
     
+    var cancellables = Set<AnyCancellable>()
+    
     var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> = .init(
         KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace"))
     
     var isEditMode: PassthroughSubject<Bool, Never> = .init()
-    var cellState: PassthroughSubject<CellState, Never> = .init()
+    var isSelected: PassthroughSubject<Bool, Never> = .init()
+    var cellColor: PassthroughSubject<UIColor, Never> = .init()
+    
+    init() {
+        setupColorBroadcasting()
+    }
     
     func appendSection() {
         let newSection = Section()
@@ -100,5 +108,21 @@ class KanbanViewModel:
     func toggleEditMode(with isEditing: Bool) {
         isEditMode.send(!isEditing)
     }
-    
+
+    private func setupColorBroadcasting() {
+        // Combine isEditMode and isSelected to determine the color to broadcast
+        Publishers.CombineLatest(isEditMode, isSelected)
+            .map { isEditMode, isSelected -> UIColor in
+                switch (isEditMode, isSelected) {
+                case (false, _):
+                    return .customLightGray
+                case (true, false):
+                    return .customUltraLightGray
+                case (true, true):
+                    return .blue
+                }
+            }
+            .subscribe(cellColor)
+            .store(in: &cancellables)
+    }
 }

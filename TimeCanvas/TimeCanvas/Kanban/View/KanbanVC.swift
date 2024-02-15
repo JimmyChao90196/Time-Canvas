@@ -61,17 +61,17 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         
         // Init collection view
         kanbanCollectionView = collectionViewFactory?.createCollectionView(bounds: view.bounds) ?? UICollectionView()
-        kanbanCollectionView.delegate = self
         kanbanCollectionView.allowsMultipleSelectionDuringEditing = true
         kanbanCollectionView.allowsMultipleSelection = true
         
-        // Init Kanban DataSource
+        // Init Kanban DataSource and Delegate
         kanbanDataSource = KanbanDataSourceType(
             kanbanData: kanbanData,
             viewModel: viewModel,
             collectionView: kanbanCollectionView)
         
         kanbanCollectionView.dataSource = kanbanDataSource
+        kanbanCollectionView.delegate = kanbanDataSource
         
         // Init Factory
         self.menuFactory = MenuConfigFactory(
@@ -103,13 +103,6 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - Data Binding
     func dataBinding() {
-        viewModel.kanbanData.sink { [weak self] updatedValue in
-            self?.kanbanDataSource?.kanbanData = updatedValue
-            DispatchQueue.main.async {
-                self?.kanbanCollectionView.reloadData()
-                self?.viewModel.isEditMode.send(false)
-            }
-        }.store(in: &cancellables)
         
         viewModel.isEditMode.sink { [weak self] updatedValue in
             self?.isEditing = updatedValue
@@ -124,39 +117,5 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     @objc func selectButtonPressed() {
         viewModel.toggleEditMode(with: isEditing)
-    }
-    
-    // MARK: - Context menu delegation -
-    
-    // Context menu delegation
-    func collectionView(
-        _ collectionView: UICollectionView,
-        contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
-        point: CGPoint) -> UIContextMenuConfiguration? {
-        
-            let options: [MenuOptions] = [.copy, .rename, .delete]
-            return menuFactory?.createContexMenuConfig(
-                with: options,
-                and: indexPaths)
-    }
-    
-    // MARK: - Collection view delegation -
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        isEditing ? true: false
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        DispatchQueue.main.async {
-            let cell = collectionView.cellForItem(at: indexPath)
-            cell?.contentView.backgroundColor = .blue
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        DispatchQueue.main.async {
-            let cell = collectionView.cellForItem(at: indexPath)
-            cell?.contentView.backgroundColor = .customUltraLightGray
-        }
     }
 }

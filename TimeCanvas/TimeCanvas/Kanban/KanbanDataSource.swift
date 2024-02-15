@@ -13,19 +13,26 @@ class KanbanDataSource<
     CellType: TaskCellProtocol & UICollectionViewCell,
     HeaderType: SectionHeaderProtocol & UICollectionReusableView>:
         NSObject,
-        UICollectionViewDataSource {
+        UICollectionViewDataSource,
+        UICollectionViewDelegate {
     
     // Typealias
-    typealias VMTypes = KanbanPropertyVMProtocol & KanbanAppendVMProtocol
+    typealias VMTypes = KanbanPropertyVMProtocol &
+    KanbanAppendVMProtocol &
+    KanbanDeleteVMProtocol &
+    KanbanAdvanceVMProtocol
     
     // ViewModel
     var viewModel: VMTypes = KanbanViewModel()
     private var cancellables: Set<AnyCancellable> = []
     
     // Data
+    var menuFactory: MenuConfigFactory?
+    
     var kanbanCollectionView = UICollectionView(
         frame: CGRect(),
         collectionViewLayout: UICollectionViewLayout())
+    var isEditing: Bool = false
     
     init(kanbanData: KanbanDataProtocol,
          viewModel: VMTypes,
@@ -36,17 +43,31 @@ class KanbanDataSource<
         
         super.init()
         dataBinding()
+        
+        // Init Factory
+        self.menuFactory = MenuConfigFactory(
+            viewModel: viewModel,
+            collectionView: kanbanCollectionView)
     }
     
     var kanbanData: KanbanDataProtocol
     
     func dataBinding() {
-//        viewModel.kanbanData.sink { [weak self] updatedValue in
-//            self?.kanbanData = updatedValue
-//            DispatchQueue.main.async {
-//                self?.kanbanCollectionView.reloadData()
-//            }
-//        }.store(in: &cancellables)
+        viewModel.isEditMode.sink { [weak self] updatedValue in
+            guard let self else { return }
+            self.isEditing = updatedValue
+            DispatchQueue.main.async {
+                self.kanbanCollectionView.reloadData()
+            }
+        }.store(in: &cancellables)
+        
+        viewModel.kanbanData.sink { [weak self] updatedValue in
+            self?.kanbanData = updatedValue
+            DispatchQueue.main.async {
+                self?.kanbanCollectionView.reloadData()
+                self?.viewModel.isEditMode.send(false)
+            }
+        }.store(in: &cancellables)
     }
     
     // MARK: - Data Source -
@@ -72,6 +93,7 @@ class KanbanDataSource<
         
         // Config Cell Content
         cell.configure(with: task)
+        
         return cell
     }
     
@@ -92,4 +114,38 @@ class KanbanDataSource<
             header.configure(with: section)
             return header
         }
+    
+    // MARK: - Context menu delegation -
+    func collectionView(
+        _ collectionView: UICollectionView,
+        contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
+        point: CGPoint) -> UIContextMenuConfiguration? {
+        
+            let options: [MenuOptions] = [.copy, .rename, .delete]
+            return menuFactory?.createContexMenuConfig(
+                with: options,
+                and: indexPaths)
+    }
+    
+    // MARK: - Collection view delegation -
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        isEditing ? true: false
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        DispatchQueue.main.async {
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.contentView.backgroundColor = .blue
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        DispatchQueue.main.async {
+            let cell = collectionView.cellForItem(at: indexPath)
+            cell?.contentView.backgroundColor = .customUltraLightGray
+        }
+        
+    }
 }
