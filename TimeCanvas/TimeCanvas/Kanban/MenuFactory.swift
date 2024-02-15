@@ -76,7 +76,7 @@ class MenuConfigFactory {
     func createContexMenuConfig(
         title: String = "More options",
         with options: [MenuOptions],
-        and indexPath: IndexPath) -> UIContextMenuConfiguration {
+        and indexPaths: [IndexPath]) -> UIContextMenuConfiguration {
             
         UIContextMenuConfiguration(
             identifier: nil,
@@ -84,7 +84,7 @@ class MenuConfigFactory {
                 
                 var UIMenuElements = [UIMenuElement]()
 
-                print(indexPath)
+                print(indexPaths)
                 
                 options.forEach { option in
                     
@@ -101,7 +101,7 @@ class MenuConfigFactory {
                             case .rename:
                                 self.viewModel.renameTask()
                             case .delete:
-                                self.viewModel.deleteTask(with: indexPath)
+                                self.viewModel.deleteTask(with: indexPaths)
                             case .archive:
                                 self.viewModel.archiveTask()
                             }

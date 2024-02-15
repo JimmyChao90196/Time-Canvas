@@ -103,17 +103,18 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     // MARK: - Data Binding
     func dataBinding() {
-        viewModel.kanbanData.sink { [weak self] updatedValue in
-            self?.kanbanCollectionView.reloadData()
-        }.store(in: &cancellables)
         
-        viewModel.isEditMode.receive(on: RunLoop.main).sink { [weak self] updatedValue in
+        viewModel.isEditMode.sink { [weak self] updatedValue in
+            
             self?.isEditing = updatedValue
             self?.kanbanCollectionView.allowsMultipleSelection = updatedValue
-            self?.kanbanCollectionView.visibleCells.forEach({ cell in
-                cell.contentView.backgroundColor = updatedValue ? .customUltraLightGray: .customLightGray
-            })
-            self?.kanbanCollectionView.reloadData()
+            
+            DispatchQueue.main.async {
+                self?.kanbanCollectionView.visibleCells.forEach({ cell in
+                    cell.contentView.backgroundColor = updatedValue ? .customUltraLightGray: .customLightGray
+                })
+            }
+            
         }.store(in: &cancellables)
     }
     
@@ -126,7 +127,9 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         viewModel.toggleEditMode(with: isEditing)
     }
     
-    // MARK: - Delegation -
+    // MARK: - Context menu delegation -
+    
+    // Context menu delegation
     func collectionView(
         _ collectionView: UICollectionView,
         contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
@@ -135,9 +138,10 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
             let options: [MenuOptions] = [.copy, .rename, .delete]
             return menuFactory?.createContexMenuConfig(
                 with: options,
-                and: indexPaths.first ?? IndexPath())
+                and: indexPaths)
     }
     
+    // MARK: - Collection view delegation -
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard isEditing else {

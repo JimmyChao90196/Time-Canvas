@@ -35,6 +35,7 @@ class TaskCollectionViewCell:
     static var cellClass: AnyClass {
         return TaskCollectionViewCell.self
     }
+    
     static var identifier = String(describing: TaskCollectionViewCell.self)
     
     // UI Elements
@@ -59,6 +60,7 @@ class TaskCollectionViewCell:
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        isSelected = false
         cancellables = []
     }
     

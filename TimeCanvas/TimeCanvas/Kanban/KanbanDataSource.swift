@@ -22,11 +22,17 @@ class KanbanDataSource<
     var viewModel: VMTypes = KanbanViewModel()
     private var cancellables: Set<AnyCancellable> = []
     
+    // Data
+    var kanbanCollectionView = UICollectionView(
+        frame: CGRect(),
+        collectionViewLayout: UICollectionViewLayout())
+    
     init(kanbanData: KanbanDataProtocol,
          viewModel: VMTypes,
          collectionView: UICollectionView) {
         self.kanbanData = kanbanData
         self.viewModel = viewModel
+        self.kanbanCollectionView = collectionView
         
         super.init()
         dataBinding()
@@ -37,6 +43,9 @@ class KanbanDataSource<
     func dataBinding() {
         viewModel.kanbanData.sink { [weak self] updatedValue in
             self?.kanbanData = updatedValue
+            DispatchQueue.main.async {
+                self?.kanbanCollectionView.reloadData()
+            }
         }.store(in: &cancellables)
     }
     
