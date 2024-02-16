@@ -18,7 +18,7 @@ protocol KanbanPropertyVMProtocol {
 
 protocol KanbanAppendVMProtocol {    
     func appendSection()
-    func appendTask(within: Section)
+    func appendTask(within: Section, after indexPath: IndexPath)
 }
 
 protocol KanbanDeleteVMProtocol {
@@ -60,7 +60,8 @@ class KanbanViewModel:
         
     }
     
-    func appendTask(within targetSection: Section) {
+    func appendTask(within targetSection: Section, after indexPath: IndexPath) {
+        
         kanbanData.value.sections = kanbanData.value.sections.map { section in
             if section.id == targetSection.id {
                 var newSection = section

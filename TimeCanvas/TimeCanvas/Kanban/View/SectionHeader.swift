@@ -15,6 +15,7 @@ protocol SectionHeaderProtocol {
     
     var viewModel: KanbanAppendVMProtocol { get set }
     var section: Section { get set }
+    var indexPath: IndexPath { get set }
     
     func configure(with section: Section)
 }
@@ -27,8 +28,9 @@ class SectionHeaderView: UICollectionReusableView, SectionHeaderProtocol {
         return SectionHeaderView.self
     }
     
-    // Current Section
+    // Essential Data
     var section: Section = Section()
+    var indexPath: IndexPath = IndexPath()
     
     // View Model
     var viewModel: KanbanAppendVMProtocol = KanbanViewModel()
@@ -77,6 +79,6 @@ class SectionHeaderView: UICollectionReusableView, SectionHeaderProtocol {
     
     // MARK: - Add Task -
     @objc func addTaskButtonPressed() {
-        viewModel.appendTask(within: self.section)
+        viewModel.appendTask(within: self.section, after: self.indexPath)
     }
 }

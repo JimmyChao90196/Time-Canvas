@@ -88,7 +88,7 @@ class KanbanDataSource<
         let section = kanbanData.sections[indexPath.section]
         let task = section.tasks[indexPath.row]
         
-        // Assign view model & cancellable
+        // Assign view model
         cell.viewModel = viewModel
         
         // Config Cell Content
@@ -109,6 +109,7 @@ class KanbanDataSource<
             
             // Assign view model instance
             header.viewModel = viewModel
+            header.indexPath = indexPath
             
             let section = kanbanData.sections[indexPath.section]
             header.configure(with: section)
@@ -146,6 +147,5 @@ class KanbanDataSource<
             let cell = collectionView.cellForItem(at: indexPath)
             cell?.contentView.backgroundColor = .customUltraLightGray
         }
-        
     }
 }

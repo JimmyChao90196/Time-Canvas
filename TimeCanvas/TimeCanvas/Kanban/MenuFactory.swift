@@ -11,6 +11,7 @@ import Combine
 
 enum MenuOptions {
     case copy
+    case insert(within: Section)
     case rename
     case delete
     case archive
@@ -19,6 +20,8 @@ enum MenuOptions {
         switch self {
         case .copy:
             "Copy Task"
+        case .insert:
+            "Insert Task"
         case .rename:
             "Rename Task"
         case .delete:
@@ -32,6 +35,8 @@ enum MenuOptions {
         switch self {
         case .copy: return .off
             
+        case .insert: return .off
+            
         case .rename: return .off
             
         case .delete: return .off
@@ -44,6 +49,8 @@ enum MenuOptions {
         switch self {
         case .copy:
             return UIImage(systemName: "doc.on.doc")!
+        case . insert:
+            return UIImage(systemName: "chevron.right.square")!
         case .rename:
             return UIImage(systemName: "square.and.pencil")!
         case .delete:
@@ -56,15 +63,18 @@ enum MenuOptions {
 
 class MenuConfigFactory {
     
+    // Type Alias
+    typealias VMType = KanbanDeleteVMProtocol & KanbanAdvanceVMProtocol & KanbanAppendVMProtocol
+    
     // View Model
-    var viewModel: KanbanDeleteVMProtocol & KanbanAdvanceVMProtocol = KanbanViewModel()
+    var viewModel: VMType = KanbanViewModel()
     
     // Collection View
     var collectionView = UICollectionView(
         frame: CGRect(),
         collectionViewLayout: UICollectionViewLayout())
     
-    init(viewModel: KanbanDeleteVMProtocol & KanbanAdvanceVMProtocol,
+    init(viewModel: VMType,
          collectionView: UICollectionView = UICollectionView(
             frame: CGRect(),
             collectionViewLayout: UICollectionViewLayout())) {
@@ -98,6 +108,8 @@ class MenuConfigFactory {
                             switch option {
                             case .copy:
                                 self.viewModel.copyTask()
+                            case .insert(let section):
+                                self.viewModel.appendTask(within: section)
                             case .rename:
                                 self.viewModel.renameTask()
                             case .delete:
