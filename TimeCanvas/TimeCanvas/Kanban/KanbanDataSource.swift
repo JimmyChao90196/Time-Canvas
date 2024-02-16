@@ -62,26 +62,48 @@ class KanbanDataSource<
         }.store(in: &cancellables)
         
         viewModel.kanbanData.sink { [weak self] updatedValue in
+            guard let self else { return }
             
+            self.kanbanData = updatedValue.0
             
             switch updatedValue {
-            case (let value, .initialize):
+            case (_, .initialize):
                 
-                self?.kanbanData = value
                 DispatchQueue.main.async {
-                    self?.kanbanCollectionView.reloadData()
-                    self?.viewModel.isEditMode.send(false)
+                    self.kanbanCollectionView.reloadData()
+                    self.viewModel.isEditMode.send(false)
                 }
-            case (let value, .appenTask(let indexPath)):
                 
-                self?.kanbanData = value
+            case (_, .appenTask(let indexPath)):
                 
                 DispatchQueue.main.async {
-                    print(indexPath)
-    
-                    self?.kanbanCollectionView.insertItems(at: [indexPath])
+                    self.kanbanCollectionView.insertItems(at: [indexPath])
+                }
+                
+            case (_, .deleteTask(let indexPaths)):
+                
+                DispatchQueue.main.async {
+                    self.kanbanCollectionView.deleteItems(at: indexPaths)
+                    self.viewModel.isEditMode.send(false)
+                }
+                
+            case (_, .insertTask(let indexPaths)):
+                DispatchQueue.main.async {
+                    self.kanbanCollectionView.insertItems(at: indexPaths)
+                    self.viewModel.isEditMode.send(false)
+                }
+                
+            case (_, .appendSection(let indexSet)):
+                DispatchQueue.main.async {
                     
+                    let sectionIndex = self.kanbanData.sections.count - 1
+                    self.kanbanCollectionView.insertSections(indexSet)
+                    self.kanbanCollectionView.scrollToItem(
+                        at: IndexPath(item: 0, section: sectionIndex),
+                        at: .bottom,
+                        animated: true)
                 }
+                
             default: fatalError("Not yet implemented")
             }
             
@@ -141,7 +163,7 @@ class KanbanDataSource<
         contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
         point: CGPoint) -> UIContextMenuConfiguration? {
         
-            let options: [MenuOptions] = [.copy, .rename, .delete]
+            let options: [MenuOptions] = [.copy, .insert, .rename, .delete]
             return menuFactory?.createContexMenuConfig(
                 with: options,
                 and: indexPaths)

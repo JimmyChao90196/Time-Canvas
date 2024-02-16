@@ -11,7 +11,7 @@ import Combine
 
 enum MenuOptions {
     case copy
-    case insert(within: Section)
+    case insert
     case rename
     case delete
     case archive
@@ -108,8 +108,8 @@ class MenuConfigFactory {
                             switch option {
                             case .copy:
                                 self.viewModel.copyTask()
-                            case .insert(let section):
-                                self.viewModel.appendTask(within: section)
+                            case .insert:
+                                self.viewModel.insertTask(before: indexPaths)
                             case .rename:
                                 self.viewModel.renameTask()
                             case .delete:

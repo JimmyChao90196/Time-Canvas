@@ -13,11 +13,11 @@ enum DataChange {
     case initialize
     
     case deleteSection
-    case deleteTask
-    case appendSection
+    case deleteTask([IndexPath])
+    case appendSection(IndexSet)
     case appenTask(IndexPath)
     case insertSection
-    case insertTask
+    case insertTask([IndexPath])
 }
 
 protocol KanbanPropertyVMProtocol {
@@ -30,7 +30,7 @@ protocol KanbanPropertyVMProtocol {
 protocol KanbanAppendVMProtocol {    
     func appendSection()
     func appendTask(within: Section)
-    func insertTask(after indexPath: IndexPath)
+    func insertTask(before indexPaths: [IndexPath])
 }
 
 protocol KanbanDeleteVMProtocol {
@@ -64,8 +64,14 @@ class KanbanViewModel:
     }
     
     func appendSection() {
-//        let newSection = Section()
-//        kanbanData.value.sections.append(newSection)
+        var tempValue = kanbanData.value.0
+        
+        let newSection = Section()
+        let indexSet = IndexSet(integer: kanbanData.value.0.sections.count)
+        
+        tempValue.sections.append(newSection)
+        
+        kanbanData.value = (tempValue, .appendSection(indexSet))
     }
     
     func deleteSection() {
@@ -86,38 +92,48 @@ class KanbanViewModel:
             }
         }
         
+        // Find insert indexPath
         let sectionIndex = updatedSections.firstIndex { $0.id == targetSection.id } ?? 0
-        let itemIndex = targetSection.tasks.count
-        
+        let itemIndex = tempValue.sections[sectionIndex].tasks.count
         let lastIndexPath = IndexPath(row: itemIndex, section: sectionIndex)
         
+        // Apply the final value and publish
         tempValue.sections = updatedSections
-        
         kanbanData.value = (tempValue, .appenTask(lastIndexPath))
     }
     
-    func insertTask(after indexPath: IndexPath) {
+    func insertTask(before indexPaths: [IndexPath]) {
+        var tempValue = kanbanData.value.0
         
+        for indexPath in indexPaths {
+            var targetSection = tempValue.sections[indexPath.section]
+            targetSection.tasks.insert(Task(), at: indexPath.item)
+            tempValue.sections[indexPath.section] = targetSection
+        }
+        
+        kanbanData.value = (tempValue, .insertTask(indexPaths))
     }
     
     func deleteTask(with indexPaths: [IndexPath]) {
         
-//        let ids = indexPaths.compactMap { indexPath in
-//            return kanbanData.value.sections[indexPath.section].tasks[indexPath.item].id
-//        }
-//        
-//        let updatedSections = kanbanData.value.sections.map { section in
-//            var tempSection = section
-//            tempSection.tasks.removeAll { task in
-//                ids.contains { id in
-//                    id == task.id
-//                }
-//            }
-//            return tempSection
-//        }
-//        
-//        kanbanData.value.sections = updatedSections
+        var tempValue = kanbanData.value.0
+        let ids = indexPaths.compactMap { indexPath in
+            return tempValue.sections[indexPath.section].tasks[indexPath.item].id
+        }
         
+        let updatedSections = tempValue.sections.map { section in
+            var tempSection = section
+            tempSection.tasks.removeAll { task in
+                ids.contains { id in
+                    id == task.id
+                }
+            }
+            return tempSection
+        }
+        
+        // Apply the final value and publish
+        tempValue.sections = updatedSections
+        kanbanData.value = (tempValue, .deleteTask(indexPaths))
     }
     
     func copyTask() {
