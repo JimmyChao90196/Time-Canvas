@@ -79,6 +79,6 @@ class SectionHeaderView: UICollectionReusableView, SectionHeaderProtocol {
     
     // MARK: - Add Task -
     @objc func addTaskButtonPressed() {
-        viewModel.appendTask(within: self.section, after: self.indexPath)
+        viewModel.appendTask(within: self.section)
     }
 }

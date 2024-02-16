@@ -62,11 +62,30 @@ class KanbanDataSource<
         }.store(in: &cancellables)
         
         viewModel.kanbanData.sink { [weak self] updatedValue in
-            self?.kanbanData = updatedValue
-            DispatchQueue.main.async {
-                self?.kanbanCollectionView.reloadData()
-                self?.viewModel.isEditMode.send(false)
+            
+            
+            switch updatedValue {
+            case (let value, .initialize):
+                
+                self?.kanbanData = value
+                DispatchQueue.main.async {
+                    self?.kanbanCollectionView.reloadData()
+                    self?.viewModel.isEditMode.send(false)
+                }
+            case (let value, .appenTask(let indexPath)):
+                
+                self?.kanbanData = value
+                
+                DispatchQueue.main.async {
+                    print(indexPath)
+    
+                    self?.kanbanCollectionView.insertItems(at: [indexPath])
+                    
+                }
+            default: fatalError("Not yet implemented")
             }
+            
+            
         }.store(in: &cancellables)
     }
     

@@ -9,8 +9,19 @@ import Foundation
 import Combine
 import UIKit
 
+enum DataChange {
+    case initialize
+    
+    case deleteSection
+    case deleteTask
+    case appendSection
+    case appenTask(IndexPath)
+    case insertSection
+    case insertTask
+}
+
 protocol KanbanPropertyVMProtocol {
-    var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> { get }
+    var kanbanData: CurrentValueSubject<(KanbanWorkSpaceModel, DataChange), Never> { get }
     var isEditMode: PassthroughSubject<Bool, Never> { get }
     var isSelected: PassthroughSubject<Bool, Never> { get }
     var cellColor: PassthroughSubject<UIColor, Never> { get }
@@ -18,7 +29,8 @@ protocol KanbanPropertyVMProtocol {
 
 protocol KanbanAppendVMProtocol {    
     func appendSection()
-    func appendTask(within: Section, after indexPath: IndexPath)
+    func appendTask(within: Section)
+    func insertTask(after indexPath: IndexPath)
 }
 
 protocol KanbanDeleteVMProtocol {
@@ -40,8 +52,8 @@ class KanbanViewModel:
     
     var cancellables = Set<AnyCancellable>()
     
-    var kanbanData: CurrentValueSubject<KanbanWorkSpaceModel, Never> = .init(
-        KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace"))
+    var kanbanData: CurrentValueSubject<(KanbanWorkSpaceModel, DataChange), Never> = .init(
+        (KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace"), .initialize))
     
     var isEditMode: PassthroughSubject<Bool, Never> = .init()
     var isSelected: PassthroughSubject<Bool, Never> = .init()
@@ -52,17 +64,19 @@ class KanbanViewModel:
     }
     
     func appendSection() {
-        let newSection = Section()
-        kanbanData.value.sections.append(newSection)
+//        let newSection = Section()
+//        kanbanData.value.sections.append(newSection)
     }
     
     func deleteSection() {
         
     }
     
-    func appendTask(within targetSection: Section, after indexPath: IndexPath) {
+    func appendTask(within targetSection: Section) {
         
-        kanbanData.value.sections = kanbanData.value.sections.map { section in
+        var tempValue = kanbanData.value.0
+        
+        let updatedSections = tempValue.sections.map { section in
             if section.id == targetSection.id {
                 var newSection = section
                 newSection.tasks.append(Task())
@@ -71,25 +85,38 @@ class KanbanViewModel:
                 return section
             }
         }
+        
+        let sectionIndex = updatedSections.firstIndex { $0.id == targetSection.id } ?? 0
+        let itemIndex = targetSection.tasks.count
+        
+        let lastIndexPath = IndexPath(row: itemIndex, section: sectionIndex)
+        
+        tempValue.sections = updatedSections
+        
+        kanbanData.value = (tempValue, .appenTask(lastIndexPath))
+    }
+    
+    func insertTask(after indexPath: IndexPath) {
+        
     }
     
     func deleteTask(with indexPaths: [IndexPath]) {
         
-        let ids = indexPaths.compactMap { indexPath in
-            return kanbanData.value.sections[indexPath.section].tasks[indexPath.item].id
-        }
-        
-        let updatedSections = kanbanData.value.sections.map { section in
-            var tempSection = section
-            tempSection.tasks.removeAll { task in
-                ids.contains { id in
-                    id == task.id
-                }
-            }
-            return tempSection
-        }
-        
-        kanbanData.value.sections = updatedSections
+//        let ids = indexPaths.compactMap { indexPath in
+//            return kanbanData.value.sections[indexPath.section].tasks[indexPath.item].id
+//        }
+//        
+//        let updatedSections = kanbanData.value.sections.map { section in
+//            var tempSection = section
+//            tempSection.tasks.removeAll { task in
+//                ids.contains { id in
+//                    id == task.id
+//                }
+//            }
+//            return tempSection
+//        }
+//        
+//        kanbanData.value.sections = updatedSections
         
     }
     
