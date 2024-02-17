@@ -22,6 +22,9 @@ enum DataChange {
 
 protocol KanbanPropertyVMProtocol {
     var kanbanData: CurrentValueSubject<(KanbanWorkSpaceModel, DataChange), Never> { get }
+}
+
+protocol CellPropertyVMProtocol {
     var isEditMode: PassthroughSubject<Bool, Never> { get }
     var isSelected: PassthroughSubject<Bool, Never> { get }
     var cellColor: PassthroughSubject<UIColor, Never> { get }
@@ -48,7 +51,8 @@ class KanbanViewModel:
     KanbanPropertyVMProtocol,
     KanbanAppendVMProtocol,
     KanbanAdvanceVMProtocol,
-    KanbanDeleteVMProtocol{
+    KanbanDeleteVMProtocol,
+    CellPropertyVMProtocol {
     
     var cancellables = Set<AnyCancellable>()
     
@@ -148,11 +152,11 @@ class KanbanViewModel:
         
     }
     
-    // Additional
+    // MARK: - Additional -
     func toggleEditMode(with isEditing: Bool) {
         isEditMode.send(!isEditing)
     }
-
+    
     private func setupColorBroadcasting() {
         // Combine isEditMode and isSelected to determine the color to broadcast
         Publishers.CombineLatest(isEditMode, isSelected)

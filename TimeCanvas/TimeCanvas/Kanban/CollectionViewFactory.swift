@@ -89,7 +89,7 @@ class LayoutConfigBig: LayoutConfigProtocol {
 }
 
 class CollectionViewFactory<
-    CellType: TaskCellProtocol & UICollectionViewCell,
+    CellType: CellProtocol & UICollectionViewCell,
     HeaderType: SectionHeaderProtocol & UICollectionReusableView> {
     
     // MARK: - Initializer -
@@ -144,7 +144,9 @@ class CollectionViewFactory<
     
     public func createCollectionView(bounds: CGRect) -> UICollectionView {
         let collectionView = UICollectionView(frame: bounds, collectionViewLayout: createLayoutGuide())
+        
         collectionView.register(CellType.cellClass, forCellWithReuseIdentifier: CellType.identifier)
+        collectionView.register(UtilityCell.self, forCellWithReuseIdentifier: UtilityCell.identifier)
         
         collectionView.register(
             HeaderType.headerClass,

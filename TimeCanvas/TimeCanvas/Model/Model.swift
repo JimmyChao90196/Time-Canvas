@@ -20,23 +20,27 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
         
         Section(name: "To Do", tasks: [Task.init(
             taskName: "What to do",
-            taskColor: "blue",
-            taskDescription: "Type Description here")]),
+            taskColor: UIColor.customUltraLightGray.toHexString(),
+            taskDescription: "Type Description here",
+            isUtility: true)]),
         
         Section(name: "Today", tasks: [Task.init(
             taskName: "What to do today",
-            taskColor: "blue",
-            taskDescription: "Type Description here")]),
+            taskColor: UIColor.customUltraLightGray.toHexString(),
+            taskDescription: "Type Description here",
+            isUtility: true)]),
         
         Section(name: "Doing", tasks: [Task.init(
             taskName: "What are you currrently doing",
-            taskColor: "blue",
-            taskDescription: "Type Description here")]),
+            taskColor: UIColor.customUltraLightGray.toHexString(),
+            taskDescription: "Type Description here",
+            isUtility: true)]),
         
         Section(name: "Done", tasks: [Task.init(
             taskName: "What to do",
-            taskColor: "blue",
-            taskDescription: "Type Description here")])
+            taskColor: UIColor.customUltraLightGray.toHexString(),
+            taskDescription: "Type Description here",
+            isUtility: true)]),
     ]
 }
 
@@ -62,5 +66,6 @@ struct Task {
     var taskName: String = "New Task"
     var taskColor: String = "Green"
     var taskDescription: String = "Description"
+    var isUtility: Bool = false
     var id: String = UUID().uuidString
 }

@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF62B79D66000E8512A /* ChartVC.swift */; };
-		744FFEF92B79D69F00E8512A /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF82B79D69F00E8512A /* ProfileViewController.swift */; };
+		744FFEF92B79D69F00E8512A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF82B79D69F00E8512A /* ProfileVC.swift */; };
 		744FFEFD2B79D98400E8512A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFC2B79D98400E8512A /* Model.swift */; };
 		744FFEFF2B79FC5C00E8512A /* CollectionViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFE2B79FC5C00E8512A /* CollectionViewFactory.swift */; };
 		744FFF032B7A095000E8512A /* TaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFF022B7A095000E8512A /* TaskCell.swift */; };
@@ -23,6 +23,8 @@
 		74995C072B71198C00F16855 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 74995C062B71198C00F16855 /* Assets.xcassets */; };
 		74995C0A2B71198C00F16855 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 74995C082B71198C00F16855 /* LaunchScreen.storyboard */; };
 		74995C122B711BF900F16855 /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74995C112B711BF900F16855 /* TabbarController.swift */; };
+		74DC644A2B805BF300E4DE5A /* UtilityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC64492B805BF300E4DE5A /* UtilityCell.swift */; };
+		74DC644D2B8060E200E4DE5A /* Cell Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC644C2B8060E200E4DE5A /* Cell Factory.swift */; };
 		74EE7E012B7C437C00B1FDE7 /* MenuFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE7E002B7C437C00B1FDE7 /* MenuFactory.swift */; };
 		74EE7E032B7C96DD00B1FDE7 /* Box.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74EE7E022B7C96DD00B1FDE7 /* Box.swift */; };
 		C4808D23D2CD2560BDD647B3 /* Pods_TimeCanvas.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA58AD5755F7A1789DAA00C0 /* Pods_TimeCanvas.framework */; };
@@ -30,7 +32,7 @@
 
 /* Begin PBXFileReference section */
 		744FFEF62B79D66000E8512A /* ChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVC.swift; sourceTree = "<group>"; };
-		744FFEF82B79D69F00E8512A /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		744FFEF82B79D69F00E8512A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		744FFEFC2B79D98400E8512A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		744FFEFE2B79FC5C00E8512A /* CollectionViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewFactory.swift; sourceTree = "<group>"; };
 		744FFF022B7A095000E8512A /* TaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCell.swift; sourceTree = "<group>"; };
@@ -47,6 +49,8 @@
 		74995C092B71198C00F16855 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		74995C0B2B71198C00F16855 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		74995C112B711BF900F16855 /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		74DC64492B805BF300E4DE5A /* UtilityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityCell.swift; sourceTree = "<group>"; };
+		74DC644C2B8060E200E4DE5A /* Cell Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Cell Factory.swift"; sourceTree = "<group>"; };
 		74EE7E002B7C437C00B1FDE7 /* MenuFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuFactory.swift; sourceTree = "<group>"; };
 		74EE7E022B7C96DD00B1FDE7 /* Box.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Box.swift; sourceTree = "<group>"; };
 		8B86500E25CC323173EF07DF /* Pods-TimeCanvas.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TimeCanvas.debug.xcconfig"; path = "Target Support Files/Pods-TimeCanvas/Pods-TimeCanvas.debug.xcconfig"; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 				744FFF062B7A20C200E8512A /* SectionHeader.swift */,
 				744FFF022B7A095000E8512A /* TaskCell.swift */,
 				74995C012B71198B00F16855 /* KanbanVC.swift */,
+				74DC64492B805BF300E4DE5A /* UtilityCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -130,7 +135,8 @@
 			children = (
 				744FFF042B7A0B4100E8512A /* Extensions.swift */,
 				744FFEF62B79D66000E8512A /* ChartVC.swift */,
-				744FFEF82B79D69F00E8512A /* ProfileViewController.swift */,
+				744FFEF82B79D69F00E8512A /* ProfileVC.swift */,
+				74DC644B2B8060C800E4DE5A /* Manager */,
 				744FFEFB2B79D96F00E8512A /* Model */,
 				744FFEF52B79D41A00E8512A /* Kanban */,
 				74995BFD2B71198B00F16855 /* AppDelegate.swift */,
@@ -141,6 +147,14 @@
 				74995C0B2B71198C00F16855 /* Info.plist */,
 			);
 			path = TimeCanvas;
+			sourceTree = "<group>";
+		};
+		74DC644B2B8060C800E4DE5A /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+				74DC644C2B8060E200E4DE5A /* Cell Factory.swift */,
+			);
+			path = Manager;
 			sourceTree = "<group>";
 		};
 		ACEA3BD66CD90FF3AD84F4FD /* Frameworks */ = {
@@ -266,13 +280,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74DC644A2B805BF300E4DE5A /* UtilityCell.swift in Sources */,
 				744FFEFD2B79D98400E8512A /* Model.swift in Sources */,
 				744FFF052B7A0B4100E8512A /* Extensions.swift in Sources */,
-				744FFEF92B79D69F00E8512A /* ProfileViewController.swift in Sources */,
+				744FFEF92B79D69F00E8512A /* ProfileVC.swift in Sources */,
 				744FFF092B7B027300E8512A /* KanbanDataSource.swift in Sources */,
 				74995C022B71198B00F16855 /* KanbanVC.swift in Sources */,
 				74995C122B711BF900F16855 /* TabbarController.swift in Sources */,
 				744FFEFF2B79FC5C00E8512A /* CollectionViewFactory.swift in Sources */,
+				74DC644D2B8060E200E4DE5A /* Cell Factory.swift in Sources */,
 				74995BFE2B71198B00F16855 /* AppDelegate.swift in Sources */,
 				74995C002B71198B00F16855 /* SceneDelegate.swift in Sources */,
 				74EE7E032B7C96DD00B1FDE7 /* Box.swift in Sources */,

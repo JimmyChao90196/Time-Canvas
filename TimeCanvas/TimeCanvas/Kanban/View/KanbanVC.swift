@@ -101,7 +101,7 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         }
     }
     
-    // MARK: - Data Binding
+    // MARK: - Data Binding -
     func dataBinding() {
         
         viewModel.isEditMode.sink { [weak self] updatedValue in

@@ -10,26 +10,19 @@ import UIKit
 import SnapKit
 import Combine
 
-protocol TaskCellProtocol {
+protocol CellProtocol: UICollectionViewCell {
     static var cellClass: AnyClass { get }
     static var identifier: String { get }
-    var isSelected: Bool { get }
-    var viewModel: KanbanPropertyVMProtocol { get set }
-    func configure(with: Task)
-}
-
-enum CellState {
-    case normal
-    case unselected
-    case selected
+    var viewModel: CellPropertyVMProtocol { get set }
+    func configure(with task: Task)
 }
 
 class TaskCollectionViewCell:
     UICollectionViewCell,
-        TaskCellProtocol{
+        CellProtocol{
     
     // View model
-    var viewModel: KanbanPropertyVMProtocol = KanbanViewModel() {
+    var viewModel: CellPropertyVMProtocol = KanbanViewModel() {
         didSet {
             dataBinding()
         }
