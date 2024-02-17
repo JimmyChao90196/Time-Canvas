@@ -22,9 +22,9 @@ class UtilityCell:
     
     // Static Property
     static var cellClass: AnyClass {
-        return TaskCollectionViewCell.self
+        return UtilityCell.self
     }
-    static var identifier = String(describing: TaskCollectionViewCell.self)
+    static var identifier = String(describing: UtilityCell.self)
     
     // UI Elements
     private let plusImage = UIImageView(image: UIImage(systemName: "plus.viewfinder")!)

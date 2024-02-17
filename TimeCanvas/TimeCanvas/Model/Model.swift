@@ -22,13 +22,13 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
             taskName: "What to do",
             taskColor: UIColor.customUltraLightGray.toHexString(),
             taskDescription: "Type Description here",
-            isUtility: true)]),
+            isUtility: false)]),
         
         Section(name: "Today", tasks: [Task.init(
             taskName: "What to do today",
             taskColor: UIColor.customUltraLightGray.toHexString(),
             taskDescription: "Type Description here",
-            isUtility: true)]),
+            isUtility: false)]),
         
         Section(name: "Doing", tasks: [Task.init(
             taskName: "What are you currrently doing",
@@ -40,7 +40,7 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
             taskName: "What to do",
             taskColor: UIColor.customUltraLightGray.toHexString(),
             taskDescription: "Type Description here",
-            isUtility: true)]),
+            isUtility: false)]),
     ]
 }
 

@@ -145,8 +145,12 @@ class CollectionViewFactory<
     public func createCollectionView(bounds: CGRect) -> UICollectionView {
         let collectionView = UICollectionView(frame: bounds, collectionViewLayout: createLayoutGuide())
         
-        collectionView.register(CellType.cellClass, forCellWithReuseIdentifier: CellType.identifier)
+         collectionView.register(CellType.cellClass, forCellWithReuseIdentifier: CellType.identifier)
+        
+        // Let's discuss this latter
         collectionView.register(UtilityCell.self, forCellWithReuseIdentifier: UtilityCell.identifier)
+//        
+//        collectionView.register(TaskCollectionViewCell.self, forCellWithReuseIdentifier: TaskCollectionViewCell.identifier)
         
         collectionView.register(
             HeaderType.headerClass,

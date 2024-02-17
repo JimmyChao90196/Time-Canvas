@@ -29,6 +29,8 @@ class KanbanDataSource<
     
     // Factory
     var menuFactory: MenuConfigFactory?
+    let utilityCellFactory = CellFactory<UtilityCell>()
+    let taskCellFactory = CellFactory<TaskCollectionViewCell>()
     
     var kanbanCollectionView = UICollectionView(
         frame: CGRect(),
@@ -124,18 +126,12 @@ class KanbanDataSource<
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-//        guard var cell = collectionView.dequeueReusableCell(
-//            withReuseIdentifier: CellType.identifier,
-//            for: indexPath) as? CellType else { return UICollectionViewCell() }
-        
         let section = kanbanData.sections[indexPath.section]
         let task = section.tasks[indexPath.row]
         
-        // var cell = UICollectionViewCell()
-        
         if task.isUtility {
-            let factory = CellFactory<UtilityCell>()
-            var cell = factory.createCell(collectionView: collectionView, indexPath: indexPath)
+            
+            let cell = utilityCellFactory.createCell(collectionView: collectionView, indexPath: indexPath)
             
             // Assign view model
             cell.viewModel = viewModel
@@ -146,8 +142,8 @@ class KanbanDataSource<
             return cell
             
         } else {
-            let factory = CellFactory<TaskCollectionViewCell>()
-            var cell = factory.createCell(collectionView: collectionView, indexPath: indexPath)
+            
+            let cell = taskCellFactory.createCell(collectionView: collectionView, indexPath: indexPath)
             
             // Assign view model
             cell.viewModel = viewModel

@@ -12,6 +12,7 @@ import Combine
 protocol CellVariantsProtocol {
     var identifier: String { get }
     var cellClass: UICollectionViewCell.Type { get }
+    var factory: any CellFactoryProtocol { get }
 }
 
 enum KanbanCellVariants: CellVariantsProtocol {
@@ -36,16 +37,31 @@ enum KanbanCellVariants: CellVariantsProtocol {
             return UtilityCell.identifier
         }
     }
+    
+    var factory: any CellFactoryProtocol {
+        switch self {
+        case .normal:
+            return CellFactory<TaskCollectionViewCell>()
+        case .utility:
+            return CellFactory<UtilityCell>()
+        }
+    }
+
 }
 
 // MARK: - Cell Switcher -
 protocol CellFactoryProtocol {
+    
+    associatedtype CellType: CellProtocol
+    
     func createCell(
         collectionView: UICollectionView,
-        indexPath: IndexPath) -> UICollectionViewCell
+        indexPath: IndexPath) -> CellType
 }
 
-class CellFactory<CellType: CellProtocol> {
+class CellFactory<CellType: CellProtocol & UICollectionViewCell>: CellFactoryProtocol{
+    
+    typealias CellType = CellType
     
     func createCell(
         collectionView: UICollectionView,
@@ -53,7 +69,7 @@ class CellFactory<CellType: CellProtocol> {
             
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: CellType.identifier,
-                for: indexPath) as? CellType else { return TaskCollectionViewCell() as! CellType }
+                for: indexPath) as? CellType else { return CellType() }
             
             return cell
         }
