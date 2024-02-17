@@ -9,6 +9,14 @@ import Foundation
 import UIKit
 import Combine
 
+// Typealias
+typealias DataSourceVMTypes = KanbanPropertyVMProtocol &
+CellPropertyVMProtocol &
+CellUtilityVMProtocol &
+KanbanAppendVMProtocol &
+KanbanDeleteVMProtocol &
+KanbanAdvanceVMProtocol
+
 class KanbanDataSource<
     CellType: CellProtocol & UICollectionViewCell,
     HeaderType: SectionHeaderProtocol & UICollectionReusableView>:
@@ -16,21 +24,12 @@ class KanbanDataSource<
         UICollectionViewDataSource,
         UICollectionViewDelegate {
     
-    // Typealias
-    typealias VMTypes = KanbanPropertyVMProtocol &
-    CellPropertyVMProtocol &
-    KanbanAppendVMProtocol &
-    KanbanDeleteVMProtocol &
-    KanbanAdvanceVMProtocol
-    
     // ViewModel
-    var viewModel: VMTypes = KanbanViewModel()
+    var viewModel: DataSourceVMTypes = KanbanViewModel()
     private var cancellables: Set<AnyCancellable> = []
     
     // Factory
     var menuFactory: MenuConfigFactory?
-    let utilityCellFactory = CellFactory<UtilityCell>()
-    let taskCellFactory = CellFactory<TaskCollectionViewCell>()
     
     var kanbanCollectionView = UICollectionView(
         frame: CGRect(),
@@ -38,7 +37,7 @@ class KanbanDataSource<
     var isEditing: Bool = false
     
     init(kanbanData: KanbanDataProtocol,
-         viewModel: VMTypes,
+         viewModel: DataSourceVMTypes,
          collectionView: UICollectionView) {
         self.kanbanData = kanbanData
         self.viewModel = viewModel
@@ -129,31 +128,12 @@ class KanbanDataSource<
         let section = kanbanData.sections[indexPath.section]
         let task = section.tasks[indexPath.row]
         
-        if task.isUtility {
-            
-            let cell = utilityCellFactory.createCell(collectionView: collectionView, indexPath: indexPath)
-            
-            // Assign view model
-            cell.viewModel = viewModel
-            
-            // Config Cell Content
-            cell.configure(with: task)
-            
-            return cell
-            
-        } else {
-            
-            let cell = taskCellFactory.createCell(collectionView: collectionView, indexPath: indexPath)
-            
-            // Assign view model
-            cell.viewModel = viewModel
-            
-            // Config Cell Content
-            cell.configure(with: task)
-            
-            return cell
-        }
+        return viewModel.cellSwitcher(
+            collectionView: collectionView,
+            indexPath: indexPath,
+            task: task)
     }
+    
     
     func collectionView(
         _ collectionView: UICollectionView,

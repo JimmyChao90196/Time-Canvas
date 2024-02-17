@@ -69,7 +69,7 @@ class UtilityCell:
         }
     }
     
-    func configure(with task: Task) {
+    func configureAppearence(with task: Task) {
         contentView.backgroundColor = task.taskColor.hexToColor()
     }
 }

@@ -14,7 +14,7 @@ protocol CellProtocol: UICollectionViewCell {
     static var cellClass: AnyClass { get }
     static var identifier: String { get }
     var viewModel: CellPropertyVMProtocol { get set }
-    func configure(with task: Task)
+    func configureAppearence(with task: Task)
 }
 
 class TaskCollectionViewCell:
@@ -94,7 +94,7 @@ class TaskCollectionViewCell:
         }
     }
     
-    func configure(with task: Task) {
+    func configureAppearence(with task: Task) {
         taskNameLabel.text = task.taskName
         taskDescriptionLabel.text = task.taskDescription
     }

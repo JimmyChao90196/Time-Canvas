@@ -15,7 +15,7 @@ protocol CellVariantsProtocol {
     var factory: any CellFactoryProtocol { get }
 }
 
-enum KanbanCellVariants: CellVariantsProtocol {
+enum KanbanCellVariants: CellVariantsProtocol, CaseIterable {
 
     case normal
     case utility
@@ -57,6 +57,12 @@ protocol CellFactoryProtocol {
     func createCell(
         collectionView: UICollectionView,
         indexPath: IndexPath) -> CellType
+}
+
+extension CellFactoryProtocol {
+    func createCell(
+        tableView: UITableView,
+        indexPath: IndexPath) -> CellType { return CellType() }
 }
 
 class CellFactory<CellType: CellProtocol & UICollectionViewCell>: CellFactoryProtocol{

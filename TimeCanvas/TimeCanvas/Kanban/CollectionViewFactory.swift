@@ -89,17 +89,20 @@ class LayoutConfigBig: LayoutConfigProtocol {
 }
 
 class CollectionViewFactory<
-    CellType: CellProtocol & UICollectionViewCell,
+    VariantType: CellVariantsProtocol,
     HeaderType: SectionHeaderProtocol & UICollectionReusableView> {
     
     // MARK: - Initializer -
     init(
-        layoutConfig: LayoutConfigProtocol
+        layoutConfig: LayoutConfigProtocol,
+        cellVariants: [VariantType]
     ) {
         self.layoutConfig = layoutConfig
+        self.cellVariants = cellVariants
     }
     
     // Config CollectionView
+    var cellVariants: [CellVariantsProtocol]
     var layoutConfig: LayoutConfigProtocol
     
     private func createItem() -> NSCollectionLayoutItem {
@@ -145,12 +148,9 @@ class CollectionViewFactory<
     public func createCollectionView(bounds: CGRect) -> UICollectionView {
         let collectionView = UICollectionView(frame: bounds, collectionViewLayout: createLayoutGuide())
         
-         collectionView.register(CellType.cellClass, forCellWithReuseIdentifier: CellType.identifier)
-        
-        // Let's discuss this latter
-        collectionView.register(UtilityCell.self, forCellWithReuseIdentifier: UtilityCell.identifier)
-//        
-//        collectionView.register(TaskCollectionViewCell.self, forCellWithReuseIdentifier: TaskCollectionViewCell.identifier)
+        cellVariants.forEach { variant in
+            collectionView.register(variant.cellClass, forCellWithReuseIdentifier: variant.identifier)
+        }
         
         collectionView.register(
             HeaderType.headerClass,

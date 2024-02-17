@@ -10,7 +10,7 @@ import UIKit
 import Combine
 
 typealias KanbanDataSourceType = KanbanDataSource<TaskCollectionViewCell, SectionHeaderView>
-typealias CollectionViewFactoryType = CollectionViewFactory <TaskCollectionViewCell, SectionHeaderView>
+typealias CollectionViewFactoryType = CollectionViewFactory <KanbanCellVariants, SectionHeaderView>
 
 class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
@@ -57,7 +57,8 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         
         // Init collection factory
         collectionViewFactory = CollectionViewFactoryType(
-            layoutConfig: LayoutConfigStandard())
+            layoutConfig: LayoutConfigStandard(),
+            cellVariants: [.normal, .utility])
         
         // Init collection view
         kanbanCollectionView = collectionViewFactory?.createCollectionView(bounds: view.bounds) ?? UICollectionView()

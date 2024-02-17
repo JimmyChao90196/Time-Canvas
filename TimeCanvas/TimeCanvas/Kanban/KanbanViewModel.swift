@@ -30,6 +30,13 @@ protocol CellPropertyVMProtocol {
     var cellColor: PassthroughSubject<UIColor, Never> { get }
 }
 
+protocol CellUtilityVMProtocol {
+    func cellSwitcher(
+        collectionView: UICollectionView,
+        indexPath: IndexPath,
+        task: Task) -> UICollectionViewCell
+}
+
 protocol KanbanAppendVMProtocol {    
     func appendSection()
     func appendTask(within: Section)
@@ -52,16 +59,21 @@ class KanbanViewModel:
     KanbanAppendVMProtocol,
     KanbanAdvanceVMProtocol,
     KanbanDeleteVMProtocol,
-    CellPropertyVMProtocol {
+    CellPropertyVMProtocol,
+    CellUtilityVMProtocol {
     
     var cancellables = Set<AnyCancellable>()
-    
     var kanbanData: CurrentValueSubject<(KanbanWorkSpaceModel, DataChange), Never> = .init(
         (KanbanWorkSpaceModel(workSpaceName: "MainWorkSpace"), .initialize))
     
     var isEditMode: PassthroughSubject<Bool, Never> = .init()
     var isSelected: PassthroughSubject<Bool, Never> = .init()
     var cellColor: PassthroughSubject<UIColor, Never> = .init()
+    
+    // variants
+    var factories: [any CellFactoryProtocol] = KanbanCellVariants.allCases.map { variant in
+        return variant.factory
+    }
     
     init() {
         setupColorBroadcasting()
@@ -152,9 +164,40 @@ class KanbanViewModel:
         
     }
     
-    // MARK: - Additional -
     func toggleEditMode(with isEditing: Bool) {
         isEditMode.send(!isEditing)
+    }
+    
+    // MARK: - Additional -
+    func cellSwitcher(
+        collectionView: UICollectionView,
+        indexPath: IndexPath,
+        task: Task) -> UICollectionViewCell {
+            
+        if task.isUtility {
+            
+            let cell = factories[1].createCell(collectionView: collectionView, indexPath: indexPath)
+            
+            // Assign view model
+            cell.viewModel = self
+            
+            // Config Cell Content
+            cell.configureAppearence(with: task)
+            
+            return cell
+            
+        } else {
+            
+            let cell = factories[0].createCell(collectionView: collectionView, indexPath: indexPath)
+            
+            // Assign view model
+            cell.viewModel = self
+            
+            // Config Cell Content
+            cell.configureAppearence(with: task)
+            
+            return cell
+        }
     }
     
     private func setupColorBroadcasting() {
