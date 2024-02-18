@@ -79,50 +79,59 @@ class MenuConfigFactory {
             frame: CGRect(),
             collectionViewLayout: UICollectionViewLayout())) {
                 
-        self.viewModel = viewModel
-        self.collectionView = collectionView
-    }
+                self.viewModel = viewModel
+                self.collectionView = collectionView
+            }
+    
+    func createMenu(
+        title: String,
+        with options: [MenuOptions],
+        and indexPaths: [IndexPath]) -> UIMenu {
+            
+            var UIMenuElements = [UIMenuElement]()
+            
+            options.forEach { option in
+                
+                let action = UIAction(
+                    title: option.name,
+                    image: option.image,
+                    identifier: nil,
+                    discoverabilityTitle: nil,
+                    state: option.state) { action in
+                        
+                        switch option {
+                        case .copy:
+                            self.viewModel.copyTask()
+                        case .insert:
+                            self.viewModel.insertTask(before: indexPaths)
+                        case .rename:
+                            self.viewModel.renameTask()
+                        case .delete:
+                            self.viewModel.deleteTask(with: indexPaths)
+                        case .archive:
+                            self.viewModel.archiveTask()
+                        }
+                    }
+                
+                UIMenuElements.append(action)
+            }
+            
+            return UIMenu(title: title, children: UIMenuElements)
+        }
     
     func createContexMenuConfig(
         title: String = "More options",
         with options: [MenuOptions],
         and indexPaths: [IndexPath]) -> UIContextMenuConfiguration {
             
-        UIContextMenuConfiguration(
-            identifier: nil,
-            previewProvider: nil) { suggestedActions -> UIMenu? in
-                
-                var UIMenuElements = [UIMenuElement]()
-
-                print(indexPaths)
-                
-                options.forEach { option in
+            UIContextMenuConfiguration(
+                identifier: nil,
+                previewProvider: nil) { suggestedActions -> UIMenu? in
                     
-                    let action = UIAction(
-                        title: option.name,
-                        image: option.image,
-                        identifier: nil,
-                        discoverabilityTitle: nil,
-                        state: option.state) { action in
-                            
-                            switch option {
-                            case .copy:
-                                self.viewModel.copyTask()
-                            case .insert:
-                                self.viewModel.insertTask(before: indexPaths)
-                            case .rename:
-                                self.viewModel.renameTask()
-                            case .delete:
-                                self.viewModel.deleteTask(with: indexPaths)
-                            case .archive:
-                                self.viewModel.archiveTask()
-                            }
-                    }
-                    
-                    UIMenuElements.append(action)
+                    self.createMenu(
+                        title: title,
+                        with: options,
+                        and: indexPaths)
                 }
- 
-                return UIMenu(title: title, children: UIMenuElements)
-            }
-    }
+        }
 }

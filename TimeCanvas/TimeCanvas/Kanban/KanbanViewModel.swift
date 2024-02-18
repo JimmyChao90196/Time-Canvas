@@ -83,7 +83,7 @@ class KanbanViewModel:
     func appendSection() {
         var tempValue = kanbanData.value.0
         
-        let newSection = Section(tasks: [Task(isUtility: true)])
+        let newSection = Section()
         let indexSet = IndexSet(integer: kanbanData.value.0.sections.count)
         
         tempValue.sections.append(newSection)

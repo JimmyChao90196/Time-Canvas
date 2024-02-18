@@ -19,6 +19,7 @@ protocol TabProtocol {
 class TabbarController: UITabBarController {
     
     enum TabConfig: String, CaseIterable, TabProtocol {
+        
         case kanban = "kanban"
         case chart = "analysis"
         case profile = "profile"
@@ -82,7 +83,7 @@ class TabbarController: UITabBarController {
         
         // Setup Appearance
         let tabBarApearance = UITabBarAppearance()
-        tabBarApearance.backgroundColor = .white
+        tabBarApearance.backgroundEffect = UIBlurEffect(style: .systemMaterialLight)
         tabBar.scrollEdgeAppearance = tabBarApearance
         tabBar.standardAppearance = tabBarApearance
     }

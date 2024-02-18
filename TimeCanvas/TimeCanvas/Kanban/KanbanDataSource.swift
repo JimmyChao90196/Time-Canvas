@@ -201,9 +201,7 @@ class KanbanDataSource<HeaderType: SectionHeaderProtocol & UICollectionReusableV
         
         let isUtility = kanbanData.sections[indexPath.section].tasks[indexPath.row].isUtility
         
-        if isUtility {
-            return
-        }
+        if isUtility { return }
         
         DispatchQueue.main.async {
             let cell = collectionView.cellForItem(at: indexPath)

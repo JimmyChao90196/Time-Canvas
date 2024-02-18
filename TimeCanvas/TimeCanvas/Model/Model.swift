@@ -47,19 +47,10 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
 struct Section {
     var name: String = "New Section"
     var tasks: [Task] = [
-        Task(taskName: "New Task",
-             taskColor: UIColor.customUltraLightGray.toHexString(),
-             taskDescription: "Type Description here")]
+        Task(taskName: "New Task", taskColor: UIColor.customUltraLightGray.toHexString(),
+             taskDescription: "Type Description here",
+            isUtility: true)]
     var id: String = UUID().uuidString
-    
-    init(
-        name: String = "New Section" ,
-        tasks: [Task] = [Task(taskName: "New Task",
-                 taskColor: UIColor.customUltraLightGray.toHexString(),
-                 taskDescription: "Type Description here")]) {
-        self.name = name
-        self.tasks = tasks
-    }
 }
 
 struct Task {

@@ -15,6 +15,22 @@ protocol CellVariantsProtocol {
     var factory: any CellFactoryProtocol { get }
 }
 
+protocol CellFactoryProtocol {
+    
+    associatedtype CellType: CellProtocol
+    
+    func createCell(
+        collectionView: UICollectionView,
+        indexPath: IndexPath) -> CellType
+}
+
+extension CellFactoryProtocol {
+    func createCell(
+        tableView: UITableView,
+        indexPath: IndexPath) -> CellType { return CellType() }
+}
+
+// MARK: - CellVariants -
 enum KanbanCellVariants: CellVariantsProtocol, CaseIterable {
 
     case normal
@@ -49,22 +65,7 @@ enum KanbanCellVariants: CellVariantsProtocol, CaseIterable {
 
 }
 
-// MARK: - Cell Switcher -
-protocol CellFactoryProtocol {
-    
-    associatedtype CellType: CellProtocol
-    
-    func createCell(
-        collectionView: UICollectionView,
-        indexPath: IndexPath) -> CellType
-}
-
-extension CellFactoryProtocol {
-    func createCell(
-        tableView: UITableView,
-        indexPath: IndexPath) -> CellType { return CellType() }
-}
-
+// MARK: - Cell Factory -
 class CellFactory<CellType: CellProtocol & UICollectionViewCell>: CellFactoryProtocol{
     
     typealias CellType = CellType

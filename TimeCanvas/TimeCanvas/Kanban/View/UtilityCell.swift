@@ -74,7 +74,7 @@ class UtilityCell:
     }
     
     func configureAppearence(with task: Task) {
-        contentView.backgroundColor = task.taskColor.hexToColor()
+        // contentView.backgroundColor = task.taskColor.hexToColor().withAlphaComponent(0.25)
     }
     
     func dataBinding() {
