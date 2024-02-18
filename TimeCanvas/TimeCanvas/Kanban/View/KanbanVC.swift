@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-typealias KanbanDataSourceType = KanbanDataSource<TaskCollectionViewCell, SectionHeaderView>
+typealias KanbanDataSourceType = KanbanDataSource< SectionHeaderView>
 typealias CollectionViewFactoryType = CollectionViewFactory <KanbanCellVariants, SectionHeaderView>
 
 class KanbanViewController: UIViewController, UICollectionViewDelegate {

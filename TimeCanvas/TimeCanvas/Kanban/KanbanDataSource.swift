@@ -17,9 +17,7 @@ KanbanAppendVMProtocol &
 KanbanDeleteVMProtocol &
 KanbanAdvanceVMProtocol
 
-class KanbanDataSource<
-    CellType: CellProtocol & UICollectionViewCell,
-    HeaderType: SectionHeaderProtocol & UICollectionReusableView>:
+class KanbanDataSource<HeaderType: SectionHeaderProtocol & UICollectionReusableView>:
         NSObject,
         UICollectionViewDataSource,
         UICollectionViewDelegate {
@@ -80,6 +78,10 @@ class KanbanDataSource<
                 
                 DispatchQueue.main.async {
                     self.kanbanCollectionView.insertItems(at: [indexPath])
+                    self.kanbanCollectionView.scrollToItem(
+                        at: indexPath,
+                        at: .centeredHorizontally, 
+                        animated: true)
                 }
                 
             case (_, .deleteTask(let indexPaths)):
@@ -159,6 +161,13 @@ class KanbanDataSource<
         _ collectionView: UICollectionView,
         contextMenuConfigurationForItemsAt indexPaths: [IndexPath],
         point: CGPoint) -> UIContextMenuConfiguration? {
+            
+            let firstIndexPath = indexPaths.first
+            let task = kanbanData
+                .sections[firstIndexPath?.section ?? 0]
+                .tasks[firstIndexPath?.row ?? 0]
+            
+            guard task.isUtility == false else { return nil }
         
             let options: [MenuOptions] = [.copy, .insert, .rename, .delete]
             return menuFactory?.createContexMenuConfig(
@@ -168,10 +177,19 @@ class KanbanDataSource<
     
     // MARK: - Collection view delegation -
     func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        isEditing ? true: false
+        let isUtility = kanbanData.sections[indexPath.section].tasks[indexPath.row].isUtility
+        return viewModel.shouldSelect(isUtility: isUtility, isEditing: isEditing)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        let isUtility = kanbanData.sections[indexPath.section].tasks[indexPath.row].isUtility
+        
+        if isUtility {
+            collectionView.deselectItem(at: indexPath, animated: true)
+            viewModel.insertTask(before: [indexPath])
+            return
+        }
         
         DispatchQueue.main.async {
             let cell = collectionView.cellForItem(at: indexPath)
@@ -180,6 +198,12 @@ class KanbanDataSource<
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        
+        let isUtility = kanbanData.sections[indexPath.section].tasks[indexPath.row].isUtility
+        
+        if isUtility {
+            return
+        }
         
         DispatchQueue.main.async {
             let cell = collectionView.cellForItem(at: indexPath)

@@ -22,13 +22,13 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
             taskName: "What to do",
             taskColor: UIColor.customUltraLightGray.toHexString(),
             taskDescription: "Type Description here",
-            isUtility: false)]),
+            isUtility: true)]),
         
         Section(name: "Today", tasks: [Task.init(
             taskName: "What to do today",
             taskColor: UIColor.customUltraLightGray.toHexString(),
             taskDescription: "Type Description here",
-            isUtility: false)]),
+            isUtility: true)]),
         
         Section(name: "Doing", tasks: [Task.init(
             taskName: "What are you currrently doing",
@@ -40,7 +40,7 @@ struct KanbanWorkSpaceModel: KanbanDataProtocol {
             taskName: "What to do",
             taskColor: UIColor.customUltraLightGray.toHexString(),
             taskDescription: "Type Description here",
-            isUtility: false)]),
+            isUtility: true)]),
     ]
 }
 
@@ -48,14 +48,14 @@ struct Section {
     var name: String = "New Section"
     var tasks: [Task] = [
         Task(taskName: "New Task",
-             taskColor: "Green",
+             taskColor: UIColor.customUltraLightGray.toHexString(),
              taskDescription: "Type Description here")]
     var id: String = UUID().uuidString
     
     init(
         name: String = "New Section" ,
         tasks: [Task] = [Task(taskName: "New Task",
-                 taskColor: "Green",
+                 taskColor: UIColor.customUltraLightGray.toHexString(),
                  taskDescription: "Type Description here")]) {
         self.name = name
         self.tasks = tasks
@@ -64,7 +64,7 @@ struct Section {
 
 struct Task {
     var taskName: String = "New Task"
-    var taskColor: String = "Green"
+    var taskColor: String = UIColor.customLightGray.toHexString()
     var taskDescription: String = "Description"
     var isUtility: Bool = false
     var id: String = UUID().uuidString

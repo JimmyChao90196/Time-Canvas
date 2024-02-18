@@ -35,6 +35,7 @@ protocol CellUtilityVMProtocol {
         collectionView: UICollectionView,
         indexPath: IndexPath,
         task: Task) -> UICollectionViewCell
+    func shouldSelect(isUtility: Bool, isEditing: Bool) -> Bool
 }
 
 protocol KanbanAppendVMProtocol {    
@@ -71,7 +72,7 @@ class KanbanViewModel:
     var cellColor: PassthroughSubject<UIColor, Never> = .init()
     
     // variants
-    var factories: [any CellFactoryProtocol] = KanbanCellVariants.allCases.map { variant in
+    var cellFactories: [any CellFactoryProtocol] = KanbanCellVariants.allCases.map { variant in
         return variant.factory
     }
     
@@ -82,7 +83,7 @@ class KanbanViewModel:
     func appendSection() {
         var tempValue = kanbanData.value.0
         
-        let newSection = Section()
+        let newSection = Section(tasks: [Task(isUtility: true)])
         let indexSet = IndexSet(integer: kanbanData.value.0.sections.count)
         
         tempValue.sections.append(newSection)
@@ -97,11 +98,13 @@ class KanbanViewModel:
     func appendTask(within targetSection: Section) {
         
         var tempValue = kanbanData.value.0
+        let newTask = Task()
         
         let updatedSections = tempValue.sections.map { section in
             if section.id == targetSection.id {
                 var newSection = section
-                newSection.tasks.append(Task())
+                let taskCount = newSection.tasks.count
+                newSection.tasks.insert(newTask, at: taskCount - 1)
                 return newSection
             } else {
                 return section
@@ -110,7 +113,7 @@ class KanbanViewModel:
         
         // Find insert indexPath
         let sectionIndex = updatedSections.firstIndex { $0.id == targetSection.id } ?? 0
-        let itemIndex = tempValue.sections[sectionIndex].tasks.count
+        let itemIndex = tempValue.sections[sectionIndex].tasks.count - 1
         let lastIndexPath = IndexPath(row: itemIndex, section: sectionIndex)
         
         // Apply the final value and publish
@@ -169,6 +172,18 @@ class KanbanViewModel:
     }
     
     // MARK: - Additional -
+    func shouldSelect(isUtility: Bool, isEditing: Bool) -> Bool {
+        if isEditing == false && isUtility == false {
+            return false
+        } else if isEditing == false && isUtility == true {
+            return true
+        } else if isEditing == true && isUtility == true {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     func cellSwitcher(
         collectionView: UICollectionView,
         indexPath: IndexPath,
@@ -176,7 +191,7 @@ class KanbanViewModel:
             
         if task.isUtility {
             
-            let cell = factories[1].createCell(collectionView: collectionView, indexPath: indexPath)
+            let cell = cellFactories[1].createCell(collectionView: collectionView, indexPath: indexPath)
             
             // Assign view model
             cell.viewModel = self
@@ -188,7 +203,7 @@ class KanbanViewModel:
             
         } else {
             
-            let cell = factories[0].createCell(collectionView: collectionView, indexPath: indexPath)
+            let cell = cellFactories[0].createCell(collectionView: collectionView, indexPath: indexPath)
             
             // Assign view model
             cell.viewModel = self

@@ -51,25 +51,40 @@ class UtilityCell:
         cancellables = []
     }
     
-    private func dataBinding() { }
-    
     private func setupViews() {
         contentView.addSubviews([plusImage])
         
-        contentView.backgroundColor = .customUltraLightGray
+        contentView.backgroundColor = .customUltraLightGray.withAlphaComponent(0.25)
         contentView.layer.cornerRadius = 10
         contentView.layer.borderWidth = 1.0
-        contentView.layer.borderColor = UIColor.customLightGray.cgColor
+        contentView.layer.borderColor = UIColor
+            .customLightGray
+            .withAlphaComponent(0.25)
+            .cgColor
+        
+        plusImage.contentMode = .scaleAspectFit
+        plusImage.tintColor = .lightGray.withAlphaComponent(0.25)
         
         plusImage.snp.makeConstraints { make in
-            make.centerX.centerY.equalToSuperview()
+            make.centerX.equalToSuperview()
             make.top.equalToSuperview().offset(10)
             make.bottom.equalToSuperview().offset(-10)
-            make.width.equalTo(plusImage.snp.height)
+            make.width.equalTo(plusImage.snp.height).multipliedBy(1.0)
         }
     }
     
     func configureAppearence(with task: Task) {
         contentView.backgroundColor = task.taskColor.hexToColor()
+    }
+    
+    func dataBinding() {
+        cancellables = []
+        viewModel.isEditMode
+            .receive(on: RunLoop.main)
+            .sink { [weak self] updatedData in
+                self?.contentView.isHidden = updatedData
+                self?.plusImage.isHidden = updatedData
+            }
+            .store(in: &cancellables)
     }
 }
