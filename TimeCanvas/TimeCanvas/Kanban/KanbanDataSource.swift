@@ -45,9 +45,7 @@ class KanbanDataSource<HeaderType: SectionHeaderProtocol & UICollectionReusableV
         dataBinding()
         
         // Init Factory
-        self.menuFactory = MenuConfigFactory(
-            viewModel: viewModel,
-            collectionView: kanbanCollectionView)
+        self.menuFactory = MenuConfigFactory(viewModel: viewModel)
     }
     
     var kanbanData: KanbanDataProtocol
@@ -66,39 +64,37 @@ class KanbanDataSource<HeaderType: SectionHeaderProtocol & UICollectionReusableV
             
             self.kanbanData = updatedValue.0
             
-            switch updatedValue {
-            case (_, .initialize):
+            DispatchQueue.main.async {
                 
-                DispatchQueue.main.async {
+                switch updatedValue {
+                case (_, .initialize):
+                    
                     self.kanbanCollectionView.reloadData()
                     self.viewModel.isEditMode.send(false)
-                }
-                
-            case (_, .appenTask(let indexPath)):
-                
-                DispatchQueue.main.async {
+                    
+                case (_, .appenTask(let indexPath)):
+                    
                     self.kanbanCollectionView.insertItems(at: [indexPath])
                     self.kanbanCollectionView.scrollToItem(
                         at: indexPath,
-                        at: .centeredHorizontally, 
+                        at: .centeredHorizontally,
                         animated: true)
-                }
-                
-            case (_, .deleteTask(let indexPaths)):
-                
-                DispatchQueue.main.async {
+                    
+                case (_, .deleteTask(let indexPaths)):
+                    
+                    
                     self.kanbanCollectionView.deleteItems(at: indexPaths)
                     self.viewModel.isEditMode.send(false)
-                }
-                
-            case (_, .insertTask(let indexPaths)):
-                DispatchQueue.main.async {
+                    
+                    
+                case (_, .insertTask(let indexPaths)):
+                    
                     self.kanbanCollectionView.insertItems(at: indexPaths)
                     self.viewModel.isEditMode.send(false)
-                }
-                
-            case (_, .appendSection(let indexSet)):
-                DispatchQueue.main.async {
+                    
+                    
+                case (_, .appendSection(let indexSet)):
+                    
                     
                     let sectionIndex = self.kanbanData.sections.count - 1
                     self.kanbanCollectionView.insertSections(indexSet)
@@ -106,11 +102,12 @@ class KanbanDataSource<HeaderType: SectionHeaderProtocol & UICollectionReusableV
                         at: IndexPath(item: 0, section: sectionIndex),
                         at: .bottom,
                         animated: true)
+                    
+                    
+                default: fatalError("Not yet implemented")
+                    
                 }
-                
-            default: fatalError("Not yet implemented")
             }
-            
             
         }.store(in: &cancellables)
     }

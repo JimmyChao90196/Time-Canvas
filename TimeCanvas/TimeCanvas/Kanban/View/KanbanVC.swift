@@ -31,7 +31,7 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         frame: CGRect(),
         collectionViewLayout: UICollectionViewLayout())
     
-    var customToolBar: UIView = UIView()
+    var customToolBar = CustomToolBar(viewModel: KanbanViewModel(), menuFactory: MenuConfigFactory(viewModel: KanbanViewModel()))
     
     lazy var addSectionButton: UIBarButtonItem = {
         let button = UIBarButtonItem(
@@ -78,8 +78,10 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
         
         // Init Factory
         self.menuFactory = MenuConfigFactory(
-            viewModel: viewModel,
-            collectionView: kanbanCollectionView)
+            viewModel: viewModel)
+        
+        // Init Custom Tool Bar
+        customToolBar = CustomToolBar(viewModel: viewModel, menuFactory: menuFactory!)
         
         setupNav()
         setupSubviews()
@@ -96,7 +98,6 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
     
     func setupSubviews() {
         view.addSubviews([kanbanCollectionView, customToolBar])
-        customToolBar.backgroundColor = .red
     }
     
     func setupConstranit(){
@@ -110,7 +111,6 @@ class KanbanViewController: UIViewController, UICollectionViewDelegate {
             make.bottom.equalToSuperview()
             make.top.equalTo(view.snp_bottomMargin)
         }
-        
     }
     
     // MARK: - Data Binding -

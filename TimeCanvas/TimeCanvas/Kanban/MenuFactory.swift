@@ -69,19 +69,9 @@ class MenuConfigFactory {
     // View Model
     var viewModel: VMType = KanbanViewModel()
     
-    // Collection View
-    var collectionView = UICollectionView(
-        frame: CGRect(),
-        collectionViewLayout: UICollectionViewLayout())
-    
-    init(viewModel: VMType,
-         collectionView: UICollectionView = UICollectionView(
-            frame: CGRect(),
-            collectionViewLayout: UICollectionViewLayout())) {
-                
-                self.viewModel = viewModel
-                self.collectionView = collectionView
-            }
+    init(viewModel: VMType) {
+        self.viewModel = viewModel
+    }
     
     func createMenu(
         title: String,

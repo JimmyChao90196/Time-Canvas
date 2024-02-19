@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		740E04562B831E510087685C /* CustomToolBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 740E04552B831E510087685C /* CustomToolBar.swift */; };
 		744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF62B79D66000E8512A /* ChartVC.swift */; };
 		744FFEF92B79D69F00E8512A /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEF82B79D69F00E8512A /* ProfileVC.swift */; };
 		744FFEFD2B79D98400E8512A /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 744FFEFC2B79D98400E8512A /* Model.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		740E04552B831E510087685C /* CustomToolBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToolBar.swift; sourceTree = "<group>"; };
 		744FFEF62B79D66000E8512A /* ChartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartVC.swift; sourceTree = "<group>"; };
 		744FFEF82B79D69F00E8512A /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		744FFEFC2B79D98400E8512A /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				744FFF022B7A095000E8512A /* TaskCell.swift */,
 				74995C012B71198B00F16855 /* KanbanVC.swift */,
 				74DC64492B805BF300E4DE5A /* UtilityCell.swift */,
+				740E04552B831E510087685C /* CustomToolBar.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 				74EE7E032B7C96DD00B1FDE7 /* Box.swift in Sources */,
 				74EE7E012B7C437C00B1FDE7 /* MenuFactory.swift in Sources */,
 				744FFF072B7A20C200E8512A /* SectionHeader.swift in Sources */,
+				740E04562B831E510087685C /* CustomToolBar.swift in Sources */,
 				744FFF032B7A095000E8512A /* TaskCell.swift in Sources */,
 				744FFEF72B79D66000E8512A /* ChartVC.swift in Sources */,
 				744FFF0C2B7B04C700E8512A /* KanbanViewModel.swift in Sources */,
